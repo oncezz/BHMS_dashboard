@@ -17,7 +17,8 @@
       <div class="q-pa-sm" v-show="menu == 1">
         <q-btn
           color="light-blue-6"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Map view"
           no-caps
@@ -27,7 +28,8 @@
         <q-btn
           @click="goToMapview"
           color="indigo-9"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Map view"
           no-caps
@@ -36,7 +38,8 @@
       <div class="q-pa-sm" v-show="menu == 2">
         <q-btn
           color="light-blue-6"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="List view"
           no-caps
@@ -46,7 +49,8 @@
         <q-btn
           @click="goToListview"
           color="indigo-9"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="List view"
           no-caps
@@ -55,7 +59,8 @@
       <div class="q-pa-sm" v-show="menu == 3">
         <q-btn
           color="light-blue-6"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Trend"
           no-caps
@@ -65,7 +70,8 @@
         <q-btn
           @click="goToTrend"
           color="indigo-9"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Trend"
           no-caps
@@ -74,7 +80,8 @@
       <div class="q-pa-sm" v-show="menu == 4">
         <q-btn
           color="light-blue-6"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Report"
           no-caps
@@ -84,7 +91,8 @@
         <q-btn
           @click="goToReport"
           color="indigo-9"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Report"
           no-caps
@@ -93,7 +101,8 @@
       <div class="q-pa-sm" v-show="menu == 5">
         <q-btn
           color="light-blue-6"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Document"
           no-caps
@@ -103,7 +112,8 @@
         <q-btn
           @click="goToDocument"
           color="indigo-9"
-          style="width:140px;"
+          style="width:180px;"
+          size="xl"
           glossy
           label="Document"
           no-caps

@@ -12,8 +12,8 @@
     <div v-show="strain < 0">
       <img src="../../public/image/lostCol.svg" alt="" style="width:3vw" />
     </div>
-    <div class="let q-pt-sm q-pb-sm">M29/24</div>
-    <div class="levelDamage">MF</div>
+    <div class="let q-pt-sm q-pb-sm">{{ labelCol }}</div>
+    <div class="levelDamage">{{ typeCol }}</div>
     <div class="let" v-show="strain >= 0">{{ strain }} µε</div>
     <div class="let" v-show="strain < 0">- µε</div>
   </div>
@@ -24,6 +24,12 @@ export default {
   props: {
     strain: {
       type: Number
+    },
+    labelCol: {
+      type: String
+    },
+    typeCol: {
+      type: String
     }
   }
 };

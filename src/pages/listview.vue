@@ -3,7 +3,7 @@
     <div class="row">
       <top-bar :menu="2"></top-bar>
     </div>
-    <col-box></col-box>
+
     <div></div>
     <!-- กล่องด้านล่าง -->
     <div class="row fixed-bottom">
