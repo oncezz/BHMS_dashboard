@@ -1,5 +1,5 @@
 <template>
-  <div style="height:180px;width:50%">
+  <div class="q-pl-md" style="height:180px;width:50%">
     <div class="bigBoxWh">
       <div class="q-pl-md q-pt-sm">Strain Level</div>
       <div class="row q-pt-md q-pl-md">
@@ -34,7 +34,7 @@ export default {};
 
 <style lang="scss" scoped>
 .bigBoxWh {
-  width: 95%;
+  width: 96%;
   font-size: 20px;
   border: 1px solid white;
   margin: auto;

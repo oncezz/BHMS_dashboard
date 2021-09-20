@@ -1,6 +1,6 @@
 <template>
   <div style="height:180px;width:50%">
-    <div class="bigBoxWh">
+    <div class="bigBoxWh brx">
       <div class="q-pl-md q-pt-sm">Level of damage</div>
       <div class="row q-pt-md">
         <div style="width:10%;" align="center">
@@ -32,7 +32,7 @@ export default {};
 
 <style lang="scss" scoped>
 .bigBoxWh {
-  width: 95%;
+  width: 96%;
   font-size: 20px;
   border: 1px solid white;
   margin: auto;
