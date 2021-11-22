@@ -3,62 +3,43 @@
     <div class="row">
       <top-bar :menu="3"></top-bar>
     </div>
-    <div class="row q-mx-xl ">
+    <!-- Duration / Plot type -->
+    <div class="row q-mx-xl " style="font-size:20px">
       <div class="col"></div>
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Duration</div>
         <div class="q-pa-md">
-          <q-input
+          <q-select
+            :options="monthList"
+            v-model="monthStart"
             dark
-            dense
-            v-model="startDate"
-            mask="date"
-            :rules="['date']"
-            placeholder="yyyy/mm/dd"
-          >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer q-pa-sm" color="white">
-                <q-popup-proxy
-                  ref="qDateProxy"
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
-                  <q-date v-model="startDate" style="color:blue;">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
+            style="font-size:20px;"
+          />
+        </div>
+        <div class="q-pa-md">
+          <q-select
+            :options="yearList"
+            v-model="yearStart"
+            dark
+            style="font-size:20px;"
+          />
         </div>
         to
         <div class="q-pa-md">
-          <q-input
+          <q-select
+            :options="monthList"
+            v-model="monthEnd"
             dark
-            dense
-            v-model="endDate"
-            mask="date"
-            :rules="['date']"
-            placeholder="yyyy/mm/dd"
-          >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer q-pa-sm" color="white">
-                <q-popup-proxy
-                  ref="qDateProxy"
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
-                  <q-date v-model="endDate" style="color:blue;">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
+            style="font-size:20px"
+          />
+        </div>
+        <div class="q-pa-md">
+          <q-select
+            :options="yearList"
+            v-model="yearEnd"
+            dark
+            style="font-size:20px;"
+          />
         </div>
       </div>
       <div class="col-1"></div>
@@ -66,19 +47,22 @@
         <div class="">Plot type :</div>
         <div class="q-gutter-sm">
           <q-radio dark v-model="plotType" val="min" label="Min value" />
-          <q-radio dark v-model="plotType" val="max" label="Max value" />
           <q-radio dark v-model="plotType" val="avg" label="Average value" />
+          <q-radio dark v-model="plotType" val="max" label="Max value" />
         </div>
       </div>
       <div class="col"></div>
     </div>
+    <!-- plot Area -->
     <div class="q-pt-md" align="center">
-      Trend of changes in {{ plotType }} from {{ startDate }} - {{ endDate }}
+      Trend of changes in {{ plotType }} from {{ monthStart }}
+      {{ yearStart }} to {{ monthEnd }} {{ yearEnd }}
     </div>
     <div class="q-pa-lg">
       <div class="chartArea brx" align="center">chart Area</div>
     </div>
-    <div class="btDiv">
+    <!-- Control box under chart area -->
+    <div class="btDiv" style="font-size:20px;">
       <div class="row items-center">
         <div class="col-1">line1</div>
         <div class="col-1 " align="center">LF</div>
@@ -288,10 +272,38 @@ export default {
   },
   data() {
     return {
-      startDate: "2019/02/01",
-      endDate: "2019/02/01",
-
-      plotType: "min",
+      monthList: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      yearList: [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026,
+        2027,
+        2028,
+        2029,
+        2030,
+        2031
+      ],
+      monthStart: "Jan",
+      yearStart: "2011",
+      monthEnd: "Feb",
+      yearEnd: "2012",
+      plotType: "avg",
       colLF: [
         {
           name: "M30/07",
@@ -373,6 +385,24 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    //กำหนดค่าเริ่มต้นของช่วง trend
+    setDuration() {
+      let d = new Date();
+      this.yearEnd = d.getFullYear();
+      this.monthEnd = this.monthList[d.getMonth()];
+      if (d.getMonth() != 0) {
+        this.yearStart = d.getFullYear();
+        this.monthStart = this.monthList[d.getMonth() - 1];
+      } else {
+        this.yearStart = this.yearEnd - 1;
+        this.monthEnd = this.monthList[11];
+      }
+    }
+  },
+  mounted() {
+    this.setDuration();
   }
 };
 </script>
@@ -387,12 +417,12 @@ export default {
 }
 .chartArea {
   margin: auto;
-  width: 700px;
-  height: 400px;
+  width: 80%;
+  height: calc(100vh - 470px);
 }
 .btDiv {
   position: absolute;
-  bottom: 5vh;
+  bottom: 2vh;
   left: 5vw;
   width: 90vw;
 }

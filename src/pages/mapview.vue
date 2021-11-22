@@ -251,6 +251,7 @@ import topBar from "../components/topbar.vue";
 import levelDamage from "../components/levelDamage.vue";
 import strainMapview from "../components/strainMapview.vue";
 import strainBox from "../components/strainBox.vue";
+import axios from "axios";
 export default {
   components: {
     topBar,
@@ -260,27 +261,8 @@ export default {
   },
   data() {
     return {
-      strainCol: [
-        3200,
-        2,
-        3,
-        4,
-        5,
-        6,
-        -3,
-        8,
-        9,
-        10,
-        1100,
-        12,
-        2400,
-        14,
-        15,
-        16,
-        3400,
-        18,
-        -999
-      ],
+      data: [],
+      strainCol: [],
       typeCol: [
         "MF",
         "MF",
@@ -324,6 +306,66 @@ export default {
         "M43/19"
       ]
     };
+  },
+  methods: {
+    async loadData() {
+      this.strainCol = [];
+      let url = this.serverpath + "fe_loaddata.php";
+      let res = await axios.get(url);
+      this.data = res.data;
+      for (let i = 1; i <= 19; i++) {
+        let fail = 0;
+        let st1 = Number(this.data[(i - 1) * 5]["initvalue"]);
+        if (st1 < 0 && st1 > -1000) {
+          st1 = 0;
+        }
+        if (st1 < -1000) {
+          fail = 1;
+        }
+        let st2 = Number(this.data[(i - 1) * 5 + 1]["initvalue"]);
+        if (st2 < 0 && st2 > -1000) {
+          st2 = 0;
+        }
+        if (st2 < -1000) {
+          fail = 1;
+        }
+        let st3 = Number(this.data[(i - 1) * 5 + 2]["initvalue"]);
+        if (st3 < 0 && st3 > -1000) {
+          st3 = 0;
+        }
+        if (st3 < -1000) {
+          fail = 1;
+        }
+        let st4 = Number(this.data[(i - 1) * 5 + 3]["initvalue"]);
+        if (st4 < 0 && st4 > -1000) {
+          st4 = 0;
+        }
+        if (st4 < -1000) {
+          fail = 1;
+        }
+        let st5 = Number(this.data[(i - 1) * 5 + 4]["initvalue"]);
+        if (st5 < 0 && st5 > -1000) {
+          st5 = 0;
+        }
+        if (st5 < -1000) {
+          fail = 1;
+        }
+        this.strainCol[i - 1] = Number(
+          Math.max(st1, st2, st3, st4, st5).toFixed(0)
+        );
+        if (fail == 1) {
+          this.strainCol[i - 1] = -9999;
+        }
+      }
+      this.strainCol.push(150);
+      this.strainCol.pop();
+    }
+  },
+  async mounted() {
+    await this.loadData();
+    setInterval(async () => {
+      await this.loadData();
+    }, 10000);
   }
 };
 </script>

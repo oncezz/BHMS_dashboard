@@ -72,6 +72,7 @@ import topBar from "../components/topbar.vue";
 import levelDamage from "../components/levelDamage.vue";
 import strainListview from "../components/strainListview.vue";
 import colBox from "../components/colBox.vue";
+import axios from "axios";
 export default {
   components: {
     topBar,
@@ -143,8 +144,85 @@ export default {
         [16, 17, 18, 19, 20],
         [16, 17, 1458, 19, 20],
         [-16, -17, -18, -19, -20]
-      ]
+      ],
+      data: []
     };
+  },
+  methods: {
+    async loadData() {
+      this.strainCol = [];
+      let url = this.serverpath + "fe_loaddata.php";
+      let res = await axios.get(url);
+      this.data = res.data;
+      let st1 = 0;
+      let st2 = 0;
+      let st3 = 0;
+      let st4 = 0;
+      let st5 = 0;
+      let temp = new Array();
+      for (let i = 1; i <= 19; i++) {
+        st1 = Number(Number(this.data[(i - 1) * 5]["initvalue"]).toFixed(0));
+        if (st1 < 0 && st1 > -1000) {
+          st1 = 0;
+        }
+        if (st1 < -1000) {
+          st1 = -9999;
+        }
+        st2 = Number(
+          Number(this.data[(i - 1) * 5 + 1]["initvalue"]).toFixed(0)
+        );
+        if (st2 < 0 && st2 > -1000) {
+          st2 = 0;
+        }
+        if (st2 < -1000) {
+          st2 = -9999;
+        }
+        st3 = Number(
+          Number(this.data[(i - 1) * 5 + 2]["initvalue"]).toFixed(0)
+        );
+        if (st3 < 0 && st3 > -1000) {
+          st3 = 0;
+        }
+        if (st3 < -1000) {
+          st3 = -9999;
+        }
+        st4 = Number(
+          Number(this.data[(i - 1) * 5 + 3]["initvalue"]).toFixed(0)
+        );
+        if (st4 < 0 && st4 > -1000) {
+          st4 = 0;
+        }
+        if (st4 < -1000) {
+          st4 = -9999;
+        }
+        st5 = Number(
+          Number(this.data[(i - 1) * 5 + 4]["initvalue"]).toFixed(0)
+        );
+        if (st5 < 0 && st5 > -1000) {
+          st5 = 0;
+        }
+        if (st5 < -1000) {
+          st5 = -9999;
+        }
+        temp = [];
+        temp.push(st1);
+        temp.push(st2);
+        temp.push(st3);
+        temp.push(st4);
+        temp.push(st5);
+        this.strainCol.push(temp);
+      }
+
+      this.strainCol.push(150);
+      this.strainCol.pop();
+      console.log(this.strainCol);
+    }
+  },
+  async mounted() {
+    await this.loadData();
+    setInterval(async () => {
+      await this.loadData();
+    }, 10000);
   }
 };
 </script>
