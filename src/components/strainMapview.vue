@@ -1,8 +1,8 @@
 <template>
-  <div class="q-pl-md" style="height:180px;width:50%">
+  <div class="q-pl-lg" style="width:50%">
     <div class="bigBoxWh">
       <div class="q-pl-md q-pt-sm">Strain Level</div>
-      <div class="row q-pt-md q-pl-md">
+      <div class="row q-pt-sm q-pl-md">
         <div style="width:18%;" align="center">
           <div class="">
             <img src="../../public/image/greenCol.svg" alt="" />
@@ -35,6 +35,7 @@ export default {};
 <style lang="scss" scoped>
 .bigBoxWh {
   width: 96%;
+  height: 144px;
   font-size: 20px;
   border: 1px solid white;
   margin: auto;

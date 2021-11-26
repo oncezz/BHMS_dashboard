@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row q-pl-xl">
     <div class="row">
       <div>
         <img
@@ -13,7 +13,7 @@
         <div class="fontSub">Burapha Withi Express Health Monitor System</div>
       </div>
     </div>
-    <div class="row butt">
+    <div class="row butt " style="padding-right:16px">
       <div class="q-pa-sm" v-show="menu == 1">
         <q-btn
           color="light-blue-6"
