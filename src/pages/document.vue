@@ -16,7 +16,7 @@
           >
         </div>
         <div style="width:20%;">
-          <div class="blueBox bg-indigo-9">
+          <div class="blueBox bg-grey">
             <div align="center" class="padC">
               <q-icon name="fas fa-database" size="80px" />
             </div>
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div style="width:20%;">
-          <div class="blueBox bg-indigo-9">
+          <div class="blueBox bg-grey">
             <div align="center" class="padC">
               <q-icon name="far fa-hdd" size="80px" />
             </div>
@@ -58,7 +58,7 @@
 
       <div class="row q-pt-md">
         <div style="width:20%;">
-          <div class="blueBox bg-indigo-9">
+          <div class="blueBox bg-grey">
             <div align="center" class="padC">
               <q-icon name="fas fa-tools" size="80px" />
             </div>
@@ -95,7 +95,6 @@ export default {
   width: 90%;
   margin: auto;
   border-radius: 15px;
-  cursor: pointer;
 }
 .fontBox {
   font-size: 1.4vw;
