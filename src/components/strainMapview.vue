@@ -14,7 +14,7 @@
         </div>
         <div style="width:30%;">more than 2000 µε</div>
       </div>
-      <div class="row q-pt-md q-pl-md q-pb-xs">
+      <div class="row q-pt-sm q-pl-md q-pb-xs">
         <div style="width:18%;" align="center">
           <div><img src="../../public/image/yellowCol.svg" alt="" /></div>
         </div>
