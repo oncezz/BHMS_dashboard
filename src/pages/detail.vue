@@ -3,9 +3,11 @@
     <top-bar></top-bar>
     <div class="q-pa-xl">
       <div class="row items-center" style="font-size:24px">
-        <div class="col-2" style="font-size: 48px;">{{ "M36/16" }}</div>
-        <div class="col-1">duration</div>
-        <div class="col-5 inputBox row items-center">
+        <div class="col-2" style="font-size: 48px;">
+          {{ labelCol[input.colId - 1] }}
+        </div>
+        <div class="col-1">Duration</div>
+        <div class=" inputBox row items-center">
           <div class="q-pl-md q-pr-sm">
             <q-select
               class="dropDownM"
@@ -55,7 +57,18 @@
             </div>
           </div>
         </div>
-        <div class="col"></div>
+        <div class="col q-pl-xl">
+          <q-btn
+            icon="fas fa-chart-line"
+            color="indigo-9"
+            style="width:197px;  height: 61px;"
+            size="xl"
+            glossy
+            label="Plot"
+            @click="plotChart()"
+            no-caps
+          />
+        </div>
         <div class="col-2" align="right">
           <q-btn
             icon="fas fa-print"
@@ -70,7 +83,19 @@
       </div>
       <div class="row">
         <div class="chartArea col">
-          <div class="brx q-pa-md" style="height:600px;">chart Area</div>
+          <!-- chart  -->
+          <div class=" q-pa-md " style="height:calc( 100vh - 340px);">
+            <div
+              v-show="!showChart"
+              align="center"
+              style="font-size:40px;line-height:calc( 100vh - 340px);"
+            >
+              Please select duration above.
+            </div>
+            <div class="q-py-md" v-show="showChart">
+              <div id="chart1" style="height:calc( 100vh - 380px);"></div>
+            </div>
+          </div>
           <div class="q-pa-md">
             <q-btn
               icon="fas fa-chevron-circle-left"
@@ -85,7 +110,7 @@
           </div>
         </div>
         <div class="col-4">
-          <div class="q-pt-xl q-pl-md">
+          <div class="q-pt-md q-mt-md q-pl-md">
             <img src="../../public/image/legendDetail.svg" alt="" />
           </div>
           <div class="legendText">
@@ -157,6 +182,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import topBar from "../components/topbar.vue";
 export default {
   components: {
@@ -164,22 +190,46 @@ export default {
   },
   data() {
     return {
+      showChart: false,
+      labelCol: [
+        "M29/24",
+        "M30/01",
+        "M30/07",
+        "M31/02",
+        "M32/11",
+        "M33/02",
+        "M34/02",
+        "M34/05",
+        "M35/23",
+        "M36/16",
+        "M36/18",
+        "M36/20",
+        "M38/17",
+        "M39/06",
+        "M40/40",
+        "M41/09",
+        "M42/04",
+        "M43/03",
+        "M43/19"
+      ],
       input: {
+        colId: Number(this.$route.params.id),
+        type: Number(this.$route.params.type),
         monthStart: "Jan",
-        monthEnd: "Feb",
+        monthEnd: "Jan",
         yearStart: "2021",
-        yearEnd: "2022",
+        yearEnd: "2021",
         daynightPick: "Whole day",
         showS1: false,
         showS2: false,
         showS3: false,
         showS4: false,
         showS5: false,
-        s1: 1950,
-        s2: 1500,
-        s3: 1010,
-        s4: 850,
-        s5: 1050
+        s1: "-",
+        s2: "-",
+        s3: "-",
+        s4: "-",
+        s5: "-"
       },
       daynightList: ["Day", "Night", "Whole day"],
 
@@ -213,9 +263,139 @@ export default {
     };
   },
   methods: {
+    async plotChart() {
+      if (this.input.daynightPick == "Whole day") {
+        let temp = {
+          id: Number(this.$route.params.id),
+          startTime: "", ///  to timestamp
+          endTime: "" ///  to timestamp
+        };
+      } else {
+      }
+
+      // chart
+      this.showChart = true;
+      let titleChart =
+        "Strain value on footing " +
+        this.labelCol[this.input.colId - 1] +
+        " from " +
+        this.input.monthStart +
+        " " +
+        this.input.yearStart +
+        " to " +
+        this.input.monthEnd +
+        " " +
+        this.input.yearEnd;
+      console.log(titleChart);
+      Highcharts.chart("chart1", {
+        title: {
+          text: titleChart
+        },
+        // chart: {
+        //   height: (9 / 20) * 100 + "%" // 16:9 ratio
+        // },
+
+        yAxis: {
+          title: {
+            text: "Strain (µε)",
+            style: {
+              fontSize: "16px"
+            }
+            // align: "high",     // position top
+            // rotation: 0,
+            // y: -15,
+            // offset: -30
+          },
+          labels: {
+            style: {
+              fontSize: "16px"
+            }
+          }
+        },
+        xAxis: {
+          title: {
+            text: "Time",
+            style: {
+              fontSize: "16px"
+            }
+          },
+          labels: {
+            style: {
+              fontSize: "16px"
+            }
+          }
+        },
+
+        legend: {
+          layout: "vertical",
+          align: "right",
+          verticalAlign: "middle"
+        },
+
+        plotOptions: {
+          series: {
+            showInLegend: false
+          }
+        },
+        series: [
+          {
+            name: "Installation",
+            data: [
+              [0, 29.9],
+              [1, 71.5],
+              [3, 106.4]
+            ]
+          },
+          {
+            name: "Manufacturing",
+            data: [
+              [0, 50.3],
+              [1, 80.4],
+              [3, 90.4]
+            ]
+          }
+        ],
+
+        responsive: {
+          rules: [
+            {
+              condition: {
+                maxWidth: 500
+              },
+              chartOptions: {
+                legend: {
+                  layout: "horizontal",
+                  align: "center",
+                  verticalAlign: "bottom"
+                }
+              }
+            }
+          ]
+        }
+      });
+    },
     goBack() {
-      this.$router.push("/mapview");
+      if (this.input.type == 1) {
+        this.$router.push("/mapview");
+      } else {
+        this.$router.push("/listview");
+      }
+    },
+    setDuration() {
+      let d = new Date();
+      this.input.yearEnd = d.getFullYear();
+      this.input.monthEnd = this.monthList[d.getMonth()];
+      if (d.getMonth() != 0) {
+        this.input.yearStart = d.getFullYear();
+        this.input.monthStart = this.monthList[d.getMonth() - 1];
+      } else {
+        this.input.yearStart = this.yearEnd - 1;
+        this.input.monthEnd = this.monthList[11];
+      }
     }
+  },
+  mounted() {
+    this.setDuration();
   }
 };
 </script>
@@ -242,6 +422,6 @@ export default {
   width: 76px;
 }
 .legendText {
-  font-size: 48px;
+  font-size: 40px;
 }
 </style>

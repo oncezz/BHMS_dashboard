@@ -7,7 +7,7 @@
       <div class="leBox"></div>
       <div class="dotBox row">
         <div class="estBox"></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center" @click="goToDetail(1)">
           <strain-box
             :strain="strainCol[0]"
             :labelCol="labelCol[0]"
@@ -17,14 +17,14 @@
         <div class="estBox "></div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(2)">
           <strain-box
             :strain="strainCol[1]"
             :labelCol="labelCol[1]"
             :typeCol="typeCol[1]"
           ></strain-box>
         </div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(3)">
           <strain-box
             :strain="strainCol[2]"
             :labelCol="labelCol[2]"
@@ -34,7 +34,7 @@
         <div class="estBox "></div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(4)">
           <strain-box
             :strain="strainCol[3]"
             :labelCol="labelCol[3]"
@@ -46,7 +46,7 @@
       </div>
       <div class="dotBox row">
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(5)">
           <strain-box
             :strain="strainCol[4]"
             :labelCol="labelCol[4]"
@@ -57,7 +57,7 @@
       </div>
       <div class="dotBox row">
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(6)">
           <strain-box
             :strain="strainCol[5]"
             :labelCol="labelCol[5]"
@@ -84,14 +84,14 @@
     <div class="whiteBox row">
       <div class="leBox"></div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(7)">
           <strain-box
             :strain="strainCol[6]"
             :labelCol="labelCol[6]"
             :typeCol="typeCol[6]"
           ></strain-box>
         </div>
-        <div class="stBox row items-center">
+        <div class="stBox row items-center" @click="goToDetail(8)">
           <strain-box
             :strain="strainCol[7]"
             :labelCol="labelCol[7]"
@@ -103,7 +103,7 @@
       <div class="dotBox row">
         <div class="estBox "></div>
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(9)">
           <strain-box
             :strain="strainCol[8]"
             :labelCol="labelCol[8]"
@@ -112,21 +112,21 @@
         </div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(10)">
           <strain-box
             :strain="strainCol[9]"
             :labelCol="labelCol[9]"
             :typeCol="typeCol[9]"
           ></strain-box>
         </div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(11)">
           <strain-box
             :strain="strainCol[10]"
             :labelCol="labelCol[10]"
             :typeCol="typeCol[10]"
           ></strain-box>
         </div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(12)">
           <strain-box
             :strain="strainCol[11]"
             :labelCol="labelCol[11]"
@@ -137,7 +137,7 @@
       <div class="dotBox"></div>
       <div class="dotBox row">
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(13)">
           <strain-box
             :strain="strainCol[12]"
             :labelCol="labelCol[12]"
@@ -165,7 +165,7 @@
       <div class="leBox"></div>
       <div class="dotBox row">
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(14)">
           <strain-box
             :strain="strainCol[13]"
             :labelCol="labelCol[13]"
@@ -175,7 +175,7 @@
         <div class="estBox "></div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(15)">
           <strain-box
             :strain="strainCol[14]"
             :labelCol="labelCol[14]"
@@ -186,7 +186,7 @@
         <div class="estBox "></div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(16)">
           <strain-box
             :strain="strainCol[15]"
             :labelCol="labelCol[15]"
@@ -198,7 +198,7 @@
       </div>
       <div class="dotBox row">
         <div class="estBox "></div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(17)">
           <strain-box
             :strain="strainCol[16]"
             :labelCol="labelCol[16]"
@@ -208,14 +208,14 @@
         <div class="estBox "></div>
       </div>
       <div class="dotBox row">
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(18)">
           <strain-box
             :strain="strainCol[17]"
             :labelCol="labelCol[17]"
             :typeCol="typeCol[17]"
           ></strain-box>
         </div>
-        <div class="stBox row items-center ">
+        <div class="stBox row items-center " @click="goToDetail(19)">
           <strain-box
             :strain="strainCol[18]"
             :labelCol="labelCol[18]"
@@ -308,6 +308,9 @@ export default {
     };
   },
   methods: {
+    goToDetail(id) {
+      this.$router.push("/detail/" + id + "/1");
+    },
     async loadData() {
       this.strainCol = [];
       let url = this.serverpath + "fe_loaddata.php";
@@ -395,6 +398,7 @@ export default {
   padding-bottom: 10px;
 }
 .stBox {
+  cursor: pointer;
   width: 33%;
 }
 .estBox {

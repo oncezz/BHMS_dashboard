@@ -12,6 +12,7 @@
           class="colBor row items-center q-pa-sm"
           v-for="index in 6"
           :key="index"
+          @click="goToDetail(index)"
         >
           <col-box
             :strainCol="strainCol[index - 1]"
@@ -26,6 +27,7 @@
           class="colBor row items-center q-pa-sm"
           v-for="index in 6"
           :key="index"
+          @click="goToDetail(index + 6)"
         >
           <col-box
             :strainCol="strainCol[index + 5]"
@@ -40,6 +42,7 @@
           class="colBor row items-center q-pa-sm"
           v-for="index in 6"
           :key="index"
+          @click="goToDetail(index + 12)"
         >
           <col-box
             :strainCol="strainCol[index + 11]"
@@ -50,7 +53,7 @@
       </div>
       <div class="row ">
         <div class="" style="width:2%"></div>
-        <div class="colBor row items-center q-pa-sm">
+        <div class="colBor row items-center q-pa-sm" @click="goToDetail(19)">
           <col-box
             :strainCol="strainCol[18]"
             :typeCol="typeCol[18]"
@@ -149,6 +152,9 @@ export default {
     };
   },
   methods: {
+    goToDetail(id) {
+      this.$router.push("/detail/" + id + "/2");
+    },
     async loadData() {
       this.strainCol = [];
       let url = this.serverpath + "fe_loaddata.php";
@@ -232,6 +238,7 @@ export default {
   height: calc(100vh-410px);
 }
 .colBor {
+  cursor: pointer;
   width: 16%;
 }
 </style>
