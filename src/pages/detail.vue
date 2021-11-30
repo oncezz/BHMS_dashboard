@@ -352,7 +352,9 @@ export default {
           data: dataS5
         }
       ];
-      console.log(data);
+      //ปรับสีเสร็จให้ตรง
+      //เติมค่า Sx max
+      //เอา Check box ออก
       Highcharts.chart("chart1", {
         chart: {
           zoomType: "x"
