@@ -124,7 +124,7 @@
               <div class="col-3" style="color:#E4C36C">
                 S1<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ input.s1 }} µε</div>
+              <div class="col-5" align="right">{{ output.s1 }} µε</div>
             </div>
             <div class="row">
               <q-checkbox
@@ -136,7 +136,7 @@
               <div class="col-3" style="color:#A6B1EF">
                 S2<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ input.s2 }} µε</div>
+              <div class="col-5" align="right">{{ output.s2 }} µε</div>
             </div>
             <div class="row">
               <q-checkbox
@@ -148,7 +148,7 @@
               <div class="col-3" style="color:#DE7AF8">
                 S3<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ input.s3 }} µε</div>
+              <div class="col-5" align="right">{{ output.s3 }} µε</div>
             </div>
             <div class="row">
               <q-checkbox
@@ -160,7 +160,7 @@
               <div class="col-3" style="color:#E19F79">
                 S4<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ input.s4 }} µε</div>
+              <div class="col-5" align="right">{{ output.s4 }} µε</div>
             </div>
             <div class="row">
               <q-checkbox
@@ -172,7 +172,7 @@
               <div class="col-3" style="color:#66DFD3">
                 S5<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ input.s5 }} µε</div>
+              <div class="col-5" align="right">{{ output.s5 }} µε</div>
             </div>
           </div>
         </div>
@@ -224,7 +224,9 @@ export default {
         showS2: false,
         showS3: false,
         showS4: false,
-        showS5: false,
+        showS5: false
+      },
+      output: {
         s1: "-",
         s2: "-",
         s3: "-",
@@ -259,17 +261,54 @@ export default {
         2029,
         2030,
         2031
-      ]
+      ],
+      dataGraph: []
     };
   },
   methods: {
     async plotChart() {
+      //หาค่า timeStartUnix / timeEndUnix millisecond
+      let mStart = this.monthList.indexOf(this.input.monthStart) + 1;
+      let startDateTemp = this.input.yearStart + "." + mStart + ".01";
+      let startDateUnix = new Date(startDateTemp).getTime();
+
+      let mEnd = this.monthList.indexOf(this.input.monthEnd) + 2;
+      let yEnd = this.input.yearEnd;
+      if (mEnd > 12) {
+        mEnd = 1;
+        yEnd += 1;
+      }
+      let endDateTemp = yEnd + "." + mEnd + ".01";
+      let dt = new Date(endDateTemp);
+
+      dt.setDate(dt.getDate() - 1);
+      endDateTemp = dt.getFullYear() + "." + dt.getMonth() + "." + dt.getDate();
+      let endDateUnix = new Date(endDateTemp).getTime();
+
+      let dataTimestamp = [];
+      let dataS1 = [];
+      let dataS2 = [];
+      let dataS3 = [];
+      let dataS4 = [];
+      let dataS5 = [];
+      //load ข้อมูล Whole day
       if (this.input.daynightPick == "Whole day") {
         let temp = {
           id: Number(this.$route.params.id),
-          startTime: "", ///  to timestamp
-          endTime: "" ///  to timestamp
+          startTime: startDateUnix,
+          endTime: endDateUnix
         };
+        let url = this.serverpath + "fe_detailwholeday.php";
+        let res = await axios.post(url, JSON.stringify(temp));
+
+        res.data.forEach(x => {
+          dataTimestamp.push(Number(x.timestamp));
+          dataS1.push(Number(x[0]));
+          dataS2.push(Number(x[1]));
+          dataS3.push(Number(x[2]));
+          dataS4.push(Number(x[3]));
+          dataS5.push(Number(x[4]));
+        });
       } else {
       }
 
@@ -286,92 +325,259 @@ export default {
         this.input.monthEnd +
         " " +
         this.input.yearEnd;
-      console.log(titleChart);
+
+      let data = [
+        {
+          name: "timestamp",
+          data: dataTimestamp
+        },
+        {
+          name: "S1",
+          data: dataS1
+        },
+        {
+          name: "S2",
+          data: dataS2
+        },
+        {
+          name: "S3",
+          data: dataS3
+        },
+        {
+          name: "S4",
+          data: dataS4
+        },
+        {
+          name: "S5",
+          data: dataS5
+        }
+      ];
+      console.log(data);
       Highcharts.chart("chart1", {
+        chart: {
+          zoomType: "x"
+        },
         title: {
           text: titleChart
         },
-        // chart: {
-        //   height: (9 / 20) * 100 + "%" // 16:9 ratio
+
+        tooltip: {
+          shared: true,
+          style: {
+            fontSize: "14px"
+          }
+        },
+        // tooltip: {
+        //   formatter: function() {
+        //     // return false;
+        //   }
         // },
-
-        yAxis: {
-          title: {
-            text: "Strain (µε)",
-            style: {
-              fontSize: "16px"
-            }
-            // align: "high",     // position top
-            // rotation: 0,
-            // y: -15,
-            // offset: -30
-          },
-          labels: {
-            style: {
-              fontSize: "16px"
-            }
-          }
-        },
         xAxis: {
-          title: {
-            text: "Time",
-            style: {
-              fontSize: "16px"
-            }
-          },
+          type: "datetime",
+          categories: data[0].data,
           labels: {
+            formatter: function() {
+              return Highcharts.dateFormat("%d-%m-%Y", this.value);
+            },
             style: {
               fontSize: "16px"
             }
           }
         },
+        yAxis: [
+          {
+            min: 0,
+            title: {
+              text: "Strain (µε)",
+              style: {
+                fontSize: "16px"
+              }
+            },
 
-        legend: {
-          layout: "vertical",
-          align: "right",
-          verticalAlign: "middle"
-        },
+            labels: {
+              style: {
+                fontSize: "16px"
+              }
+            }
+          }
+        ],
 
         plotOptions: {
+          area: {
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [
+                [0, Highcharts.getOptions().colors[0]],
+                [
+                  1,
+                  Highcharts.Color(Highcharts.getOptions().colors[0])
+                    .setOpacity(0)
+                    .get("rgba")
+                ]
+              ]
+            },
+            marker: {
+              radius: 2
+            },
+            lineWidth: 1,
+            states: {
+              hover: {
+                lineWidth: 1
+              }
+            },
+            threshold: null
+          },
           series: {
             showInLegend: false
           }
         },
         series: [
           {
-            name: "Installation",
-            data: [
-              [0, 29.9],
-              [1, 71.5],
-              [3, 106.4]
-            ]
+            type: "spline",
+            name: "S1",
+
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[1].data
           },
           {
-            name: "Manufacturing",
-            data: [
-              [0, 50.3],
-              [1, 80.4],
-              [3, 90.4]
-            ]
-          }
-        ],
+            type: "spline",
+            name: "S2",
 
-        responsive: {
-          rules: [
-            {
-              condition: {
-                maxWidth: 500
-              },
-              chartOptions: {
-                legend: {
-                  layout: "horizontal",
-                  align: "center",
-                  verticalAlign: "bottom"
-                }
-              }
-            }
-          ]
-        }
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[2].data
+          },
+          {
+            type: "spline",
+            name: "S3",
+
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[3].data
+          },
+          {
+            type: "spline",
+            name: "S4",
+
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[4].data
+          },
+          {
+            type: "spline",
+            name: "S3",
+
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[5].data
+          }
+        ]
+        // title: {
+        //   text: titleChart
+        // },
+        // // chart: {
+        // //   height: (9 / 20) * 100 + "%" // 16:9 ratio
+        // // },
+        // yAxis: {
+        //   title: {
+        //     text: "Strain (µε)",
+        //     style: {
+        //       fontSize: "16px"
+        //     }
+        //     // align: "high",     // position top
+        //     // rotation: 0,
+        //     // y: -15,
+        //     // offset: -30
+        //   },
+        //   labels: {
+        //     style: {
+        //       fontSize: "16px"
+        //     }
+        //   }
+        // },
+        // xAxis: {
+        //   title: {
+        //     text: "Time",
+        //     style: {
+        //       fontSize: "16px"
+        //     }
+        //   },
+        //   labels: {
+        //     style: {
+        //       fontSize: "16px"
+        //     }
+        //   }
+        // },
+        // legend: {
+        //   layout: "vertical",
+        //   align: "right",
+        //   verticalAlign: "middle"
+        // },
+        // plotOptions: {
+        //   series: {
+        //     showInLegend: false
+        //   }
+        // },
+        // series: [
+        //   {
+        //     name: "Installation",
+        //     data: [
+        //       [0, 29.9],
+        //       [1, 71.5],
+        //       [3, 106.4]
+        //     ]
+        //   },
+        //   {
+        //     name: "Manufacturing",
+        //     data: [
+        //       [0, 50.3],
+        //       [1, 80.4],
+        //       [3, 90.4]
+        //     ]
+        //   }
+        // ],
+        // responsive: {
+        //   rules: [
+        //     {
+        //       condition: {
+        //         maxWidth: 500
+        //       },
+        //       chartOptions: {
+        //         legend: {
+        //           layout: "horizontal",
+        //           align: "center",
+        //           verticalAlign: "bottom"
+        //         }
+        //       }
+        //     }
+        //   ]
+        // }
       });
     },
     goBack() {
