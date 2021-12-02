@@ -52,7 +52,7 @@
                 :options="daynightList"
                 v-model="input.daynightPick"
                 dark
-                style="font-size:20px;width"
+                style="font-size:20px;width:150px"
               />
             </div>
           </div>
@@ -78,6 +78,7 @@
             glossy
             label="Print"
             no-caps
+            disable
           />
         </div>
       </div>
@@ -113,66 +114,61 @@
           <div class="q-pt-md q-mt-md q-pl-md">
             <img src="../../public/image/legendDetail.svg" alt="" />
           </div>
-          <div class="legendText">
+          <div class="legendText q-pl-xl q-ml-md">
             <div class="row">
-              <q-checkbox
-                dark
-                v-model="input.showS1"
-                color="yellow-7"
-                size="xl"
-              />
               <div class="col-3" style="color:#E4C36C">
                 S1<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ output.s1 }} µε</div>
+              <div class="col-5" align="right" v-show="output.s1 != ''">
+                {{ output.s1 }} µε
+              </div>
+              <div class="col-5" align="right" v-show="output.s1 == ''">
+                <span class="q-pr-xl q-mr-md">- </span>µε
+              </div>
             </div>
             <div class="row">
-              <q-checkbox
-                dark
-                v-model="input.showS2"
-                color="deep-purple-3"
-                size="xl"
-              />
               <div class="col-3" style="color:#A6B1EF">
                 S2<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ output.s2 }} µε</div>
+              <div class="col-5" align="right" v-show="output.s1 != ''">
+                {{ output.s2 }} µε
+              </div>
+              <div class="col-5" align="right" v-show="output.s1 == ''">
+                <span class="q-pr-xl q-mr-md">- </span>µε
+              </div>
             </div>
             <div class="row">
-              <q-checkbox
-                dark
-                v-model="input.showS3"
-                color="purple-12"
-                size="xl"
-              />
               <div class="col-3" style="color:#DE7AF8">
                 S3<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ output.s3 }} µε</div>
+              <div class="col-5" align="right" v-show="output.s1 != ''">
+                {{ output.s3 }} µε
+              </div>
+              <div class="col-5" align="right" v-show="output.s1 == ''">
+                <span class="q-pr-xl q-mr-md">- </span>µε
+              </div>
             </div>
             <div class="row">
-              <q-checkbox
-                dark
-                v-model="input.showS4"
-                color="orange-4"
-                size="xl"
-              />
-              <div class="col-3" style="color:#E19F79">
+              <div class="col-3" style="color:#FFFFFF">
                 S4<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ output.s4 }} µε</div>
+              <div class="col-5" align="right" v-show="output.s1 != ''">
+                {{ output.s4 }} µε
+              </div>
+              <div class="col-5" align="right" v-show="output.s1 == ''">
+                <span class="q-pr-xl q-mr-md">- </span>µε
+              </div>
             </div>
             <div class="row">
-              <q-checkbox
-                dark
-                v-model="input.showS5"
-                color="cyan-4"
-                size="xl"
-              />
               <div class="col-3" style="color:#66DFD3">
                 S5<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right">{{ output.s5 }} µε</div>
+              <div class="col-5" align="right" v-show="output.s1 != ''">
+                {{ output.s5 }} µε
+              </div>
+              <div class="col-5" align="right" v-show="output.s1 == ''">
+                <span class="q-pr-xl q-mr-md">- </span>µε
+              </div>
             </div>
           </div>
         </div>
@@ -219,19 +215,14 @@ export default {
         monthEnd: "Jan",
         yearStart: "2021",
         yearEnd: "2021",
-        daynightPick: "Whole day",
-        showS1: false,
-        showS2: false,
-        showS3: false,
-        showS4: false,
-        showS5: false
+        daynightPick: "Whole day"
       },
       output: {
-        s1: "-",
-        s2: "-",
-        s3: "-",
-        s4: "-",
-        s5: "-"
+        s1: "",
+        s2: "",
+        s3: "",
+        s4: "",
+        s5: ""
       },
       daynightList: ["Day", "Night", "Whole day"],
 
@@ -310,8 +301,24 @@ export default {
           dataS5.push(Number(x[4]));
         });
       } else {
+        let temp = {
+          id: Number(this.$route.params.id),
+          startTime: startDateUnix,
+          endTime: endDateUnix,
+          daynight: this.input.daynightPick == "Day" ? 0 : 1
+        };
+        let url = this.serverpath + "fe_detaildaynight.php";
+        let res = await axios.post(url, JSON.stringify(temp));
+        console.log(res.data);
+        res.data.forEach(x => {
+          dataTimestamp.push(Number(x.timestamp));
+          dataS1.push(Number(x[0]));
+          dataS2.push(Number(x[1]));
+          dataS3.push(Number(x[2]));
+          dataS4.push(Number(x[3]));
+          dataS5.push(Number(x[4]));
+        });
       }
-
       // chart
       this.showChart = true;
       let titleChart =
@@ -352,9 +359,28 @@ export default {
           data: dataS5
         }
       ];
-      //ปรับสีเสร็จให้ตรง
-      //เติมค่า Sx max
-      //เอา Check box ออก
+      // หาค่า max
+      this.output.s1 = Number(Math.max.apply(null, data[1].data))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.output.s2 = Number(Math.max.apply(null, data[2].data))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.output.s3 = Number(Math.max.apply(null, data[3].data))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.output.s4 = Number(Math.max.apply(null, data[4].data))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.output.s5 = Number(Math.max.apply(null, data[5].data))
+        .toFixed(0)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
       Highcharts.chart("chart1", {
         chart: {
           zoomType: "x"
@@ -445,7 +471,7 @@ export default {
           {
             type: "spline",
             name: "S1",
-
+            color: "#E4C36C",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -457,7 +483,7 @@ export default {
           {
             type: "spline",
             name: "S2",
-
+            color: "#A6B1EF",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -469,7 +495,7 @@ export default {
           {
             type: "spline",
             name: "S3",
-
+            color: "#DE7AF8",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -481,7 +507,7 @@ export default {
           {
             type: "spline",
             name: "S4",
-
+            color: "#FFFFFF",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -492,8 +518,8 @@ export default {
           },
           {
             type: "spline",
-            name: "S3",
-
+            name: "S5",
+            color: "#66DFD3",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -503,86 +529,6 @@ export default {
             data: data[5].data
           }
         ]
-        // title: {
-        //   text: titleChart
-        // },
-        // // chart: {
-        // //   height: (9 / 20) * 100 + "%" // 16:9 ratio
-        // // },
-        // yAxis: {
-        //   title: {
-        //     text: "Strain (µε)",
-        //     style: {
-        //       fontSize: "16px"
-        //     }
-        //     // align: "high",     // position top
-        //     // rotation: 0,
-        //     // y: -15,
-        //     // offset: -30
-        //   },
-        //   labels: {
-        //     style: {
-        //       fontSize: "16px"
-        //     }
-        //   }
-        // },
-        // xAxis: {
-        //   title: {
-        //     text: "Time",
-        //     style: {
-        //       fontSize: "16px"
-        //     }
-        //   },
-        //   labels: {
-        //     style: {
-        //       fontSize: "16px"
-        //     }
-        //   }
-        // },
-        // legend: {
-        //   layout: "vertical",
-        //   align: "right",
-        //   verticalAlign: "middle"
-        // },
-        // plotOptions: {
-        //   series: {
-        //     showInLegend: false
-        //   }
-        // },
-        // series: [
-        //   {
-        //     name: "Installation",
-        //     data: [
-        //       [0, 29.9],
-        //       [1, 71.5],
-        //       [3, 106.4]
-        //     ]
-        //   },
-        //   {
-        //     name: "Manufacturing",
-        //     data: [
-        //       [0, 50.3],
-        //       [1, 80.4],
-        //       [3, 90.4]
-        //     ]
-        //   }
-        // ],
-        // responsive: {
-        //   rules: [
-        //     {
-        //       condition: {
-        //         maxWidth: 500
-        //       },
-        //       chartOptions: {
-        //         legend: {
-        //           layout: "horizontal",
-        //           align: "center",
-        //           verticalAlign: "bottom"
-        //         }
-        //       }
-        //     }
-        //   ]
-        // }
       });
     },
     goBack() {
