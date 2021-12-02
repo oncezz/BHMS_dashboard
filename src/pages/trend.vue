@@ -4,8 +4,7 @@
       <top-bar :menu="3"></top-bar>
     </div>
     <!-- Duration / Plot type -->
-    <div class="row q-mx-xl " style="font-size:20px">
-      <div class="col"></div>
+    <div class="row q-mx-xl justify-evenly" style="font-size:20px">
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Duration</div>
         <div class="q-pa-md">
@@ -13,7 +12,7 @@
             :options="monthList"
             v-model="monthStart"
             dark
-            style="font-size:20px;"
+            style="font-size:20px;width:76px"
           />
         </div>
         <div class="q-pa-md">
@@ -21,7 +20,7 @@
             :options="yearList"
             v-model="yearStart"
             dark
-            style="font-size:20px;"
+            style="font-size:20px;width:88px"
           />
         </div>
         to
@@ -30,7 +29,7 @@
             :options="monthList"
             v-model="monthEnd"
             dark
-            style="font-size:20px"
+            style="font-size:20px;width:76px"
           />
         </div>
         <div class="q-pa-md">
@@ -38,28 +37,47 @@
             :options="yearList"
             v-model="yearEnd"
             dark
-            style="font-size:20px;"
+            style="font-size:20px;width:88px"
           />
         </div>
       </div>
-      <div class="col-1"></div>
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Plot type :</div>
         <div class="q-gutter-sm">
           <q-radio dark v-model="plotType" val="min" label="Min value" />
-          <q-radio dark v-model="plotType" val="avg" label="Average value" />
           <q-radio dark v-model="plotType" val="max" label="Max value" />
+          <q-radio dark v-model="plotType" val="avg" label="Average value" />
         </div>
       </div>
-      <div class="col"></div>
+      <div class="col-1 q-my-md">
+        <q-btn
+          icon="fas fa-chart-line"
+          color="indigo-9"
+          style="width:197px;  height: 61px;"
+          size="xl"
+          glossy
+          label="Plot"
+          @click="plotChart()"
+          no-caps
+        />
+      </div>
     </div>
     <!-- plot Area -->
     <div class="q-pt-md" align="center">
-      Trend of changes in {{ plotType }} from {{ monthStart }}
-      {{ yearStart }} to {{ monthEnd }} {{ yearEnd }}
+      Trend of changes in <span v-show="plotType == 'min'">minimun</span
+      ><span v-show="plotType == 'max'">maximum</span
+      ><span v-show="plotType == 'avg'">average</span> strain from
+      {{ monthStart }} {{ yearStart }} to {{ monthEnd }} {{ yearEnd }}
     </div>
-    <div class="q-pa-lg">
-      <div class="chartArea brx" align="center">chart Area</div>
+    <div class="chartArea">
+      <div
+        v-show="!showChart"
+        align="center"
+        style="font-size:40px;line-height: calc(100vh - 470px);"
+      >
+        Please select duration above.
+      </div>
+      <div class="" v-show="showChart"></div>
     </div>
     <!-- Control box under chart area -->
     <div class="btDiv" style="font-size:20px;">
@@ -265,13 +283,14 @@
 
 <script>
 import topBar from "../components/topbar.vue";
-import { date } from "quasar";
+
 export default {
   components: {
     topBar
   },
   data() {
     return {
+      showChart: false,
       monthList: [
         "Jan",
         "Feb",
@@ -399,6 +418,9 @@ export default {
         this.yearStart = this.yearEnd - 1;
         this.monthEnd = this.monthList[11];
       }
+    },
+    plotChart() {
+      this.showChart = true;
     }
   },
   mounted() {
