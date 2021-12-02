@@ -369,6 +369,9 @@ export default {
             fontSize: "14px"
           }
         },
+        credits: {
+          enabled: false
+        },
         // tooltip: {
         //   formatter: function() {
         //     // return false;
