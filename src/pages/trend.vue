@@ -63,12 +63,7 @@
       </div>
     </div>
     <!-- plot Area -->
-    <div class="q-pt-md" align="center">
-      Trend of changes in <span v-show="plotType == 'min'">minimun</span
-      ><span v-show="plotType == 'max'">maximum</span
-      ><span v-show="plotType == 'avg'">average</span> strain from
-      {{ monthStart }} {{ yearStart }} to {{ monthEnd }} {{ yearEnd }}
-    </div>
+
     <div class="chartArea">
       <div
         v-show="!showChart"
@@ -77,7 +72,11 @@
       >
         Please select duration above.
       </div>
-      <div class="" v-show="showChart"></div>
+      <div
+        id="chart1"
+        style="height: calc(100vh - 400px);"
+        v-show="showChart"
+      ></div>
     </div>
     <!-- Control box under chart area -->
     <div class="btDiv" style="font-size:20px;">
@@ -405,8 +404,7 @@ export default {
           name: "M35/23",
           status: false
         }
-      ],
-      dataLoad: [] //ข้อมูลดิบที่โหลดจาก api
+      ]
     };
   },
   methods: {
@@ -499,8 +497,251 @@ export default {
         dataS18.push(Number(x[17]));
         dataS19.push(Number(x[18]));
       });
-      console.log(dataS19);
       this.showChart = true;
+
+      let titleChart =
+        "Trend of changes in " +
+        this.plotType +
+        " strain from " +
+        this.monthStart +
+        " " +
+        this.yearStart +
+        " to " +
+        this.monthEnd +
+        " " +
+        this.yearEnd;
+
+      let data = [
+        {
+          name: "timestamp",
+          data: dataTimestamp
+        },
+        {
+          name: "M29/24",
+          data: dataS1
+        },
+        {
+          name: "M30/01",
+          data: dataS2
+        },
+        {
+          name: "M30/07",
+          data: dataS3
+        },
+        {
+          name: "M31/02",
+          data: dataS4
+        },
+        {
+          name: "M32/11",
+          data: dataS5
+        },
+        {
+          name: "M33/02",
+          data: dataS6
+        },
+        {
+          name: "M34/02",
+          data: dataS7
+        },
+        {
+          name: "M34/05",
+          data: dataS8
+        },
+        {
+          name: "M35/23",
+          data: dataS9
+        },
+        {
+          name: "M36/16",
+          data: dataS10
+        },
+        {
+          name: "M36/18",
+          data: dataS11
+        },
+        {
+          name: "M36/20",
+          data: dataS12
+        },
+        {
+          name: "M38/17",
+          data: dataS13
+        },
+        {
+          name: "M39/06",
+          data: dataS14
+        },
+        {
+          name: "M40/40",
+          data: dataS15
+        },
+        {
+          name: "M41/09",
+          data: dataS16
+        },
+        {
+          name: "M42/04",
+          data: dataS17
+        },
+        {
+          name: "M43/03",
+          data: dataS18
+        },
+        {
+          name: "M43/19",
+          data: dataS19
+        }
+      ];
+      Highcharts.chart("chart1", {
+        chart: {
+          zoomType: "x"
+        },
+        title: {
+          text: titleChart
+        },
+
+        tooltip: {
+          shared: true,
+          style: {
+            fontSize: "14px"
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        // tooltip: {
+        //   formatter: function() {
+        //     // return false;
+        //   }
+        // },
+        xAxis: {
+          type: "datetime",
+          categories: data[0].data,
+          labels: {
+            formatter: function() {
+              return Highcharts.dateFormat("%d-%m-%Y", this.value);
+            },
+            style: {
+              fontSize: "16px"
+            }
+          }
+        },
+        yAxis: [
+          {
+            min: 0,
+            title: {
+              text: "Strain (µε)",
+              style: {
+                fontSize: "16px"
+              }
+            },
+
+            labels: {
+              style: {
+                fontSize: "16px"
+              }
+            }
+          }
+        ],
+
+        plotOptions: {
+          area: {
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [
+                [0, Highcharts.getOptions().colors[0]],
+                [
+                  1,
+                  Highcharts.Color(Highcharts.getOptions().colors[0])
+                    .setOpacity(0)
+                    .get("rgba")
+                ]
+              ]
+            },
+            marker: {
+              radius: 2
+            },
+            lineWidth: 1,
+            states: {
+              hover: {
+                lineWidth: 1
+              }
+            },
+            threshold: null
+          },
+          series: {
+            showInLegend: false
+          }
+        },
+        series: [
+          {
+            type: "spline",
+            name: "S1",
+            color: "#E4C36C",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[1].data
+          },
+          {
+            type: "spline",
+            name: "S2",
+            color: "#A6B1EF",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[2].data
+          },
+          {
+            type: "spline",
+            name: "S3",
+            color: "#DE7AF8",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[3].data
+          },
+          {
+            type: "spline",
+            name: "S4",
+            color: "#FFFFFF",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[4].data
+          },
+          {
+            type: "spline",
+            name: "S5",
+            color: "#66DFD3",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            data: data[5].data
+          }
+        ]
+      });
     }
   },
   mounted() {
