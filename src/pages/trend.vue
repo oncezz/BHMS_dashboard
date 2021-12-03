@@ -282,6 +282,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import topBar from "../components/topbar.vue";
 
 export default {
@@ -318,11 +319,13 @@ export default {
         2030,
         2031
       ],
+
       monthStart: "Jan",
       yearStart: "2011",
       monthEnd: "Feb",
       yearEnd: "2012",
       plotType: "avg",
+
       colLF: [
         {
           name: "M30/07",
@@ -402,7 +405,8 @@ export default {
           name: "M35/23",
           status: false
         }
-      ]
+      ],
+      dataLoad: [] //ข้อมูลดิบที่โหลดจาก api
     };
   },
   methods: {
@@ -419,7 +423,83 @@ export default {
         this.monthEnd = this.monthList[11];
       }
     },
-    plotChart() {
+    async plotChart() {
+      //หาค่า timeStartUnix / timeEndUnix millisecond
+      let mStart = this.monthList.indexOf(this.monthStart) + 1;
+      let startDateTemp = this.yearStart + "." + mStart + ".01";
+      let startDateUnix = new Date(startDateTemp).getTime();
+
+      let mEnd = this.monthList.indexOf(this.monthEnd) + 2;
+      let yEnd = this.yearEnd;
+      if (mEnd > 12) {
+        mEnd = 1;
+        yEnd += 1;
+      }
+      let endDateTemp = yEnd + "." + mEnd + ".01";
+      let dt = new Date(endDateTemp);
+
+      dt.setDate(dt.getDate() - 1);
+      endDateTemp = dt.getFullYear() + "." + dt.getMonth() + "." + dt.getDate();
+      let endDateUnix = new Date(endDateTemp).getTime();
+
+      let temp = {
+        startTime: startDateUnix,
+        endTime: endDateUnix
+      };
+      let url;
+      if (this.plotType == "min") {
+        url = this.serverpath + "fe_loadtrendmin.php";
+      } else if (this.plotType == "avg") {
+        url = this.serverpath + "fe_loadtrendavg.php";
+      } else if (this.plotType == "max") {
+        url = this.serverpath + "fe_loadtrendmax.php";
+      }
+
+      let res = await axios.post(url, JSON.stringify(temp));
+      let dataTimestamp = [];
+      let dataS1 = [];
+      let dataS2 = [];
+      let dataS3 = [];
+      let dataS4 = [];
+      let dataS5 = [];
+      let dataS6 = [];
+      let dataS7 = [];
+      let dataS8 = [];
+      let dataS9 = [];
+      let dataS10 = [];
+      let dataS11 = [];
+      let dataS12 = [];
+      let dataS13 = [];
+      let dataS14 = [];
+      let dataS15 = [];
+      let dataS16 = [];
+      let dataS17 = [];
+      let dataS18 = [];
+      let dataS19 = [];
+
+      res.data.forEach(x => {
+        dataTimestamp.push(Number(x.timestamp));
+        dataS1.push(Number(x[0]));
+        dataS2.push(Number(x[1]));
+        dataS3.push(Number(x[2]));
+        dataS4.push(Number(x[3]));
+        dataS5.push(Number(x[4]));
+        dataS6.push(Number(x[5]));
+        dataS7.push(Number(x[6]));
+        dataS8.push(Number(x[7]));
+        dataS9.push(Number(x[8]));
+        dataS10.push(Number(x[9]));
+        dataS11.push(Number(x[10]));
+        dataS12.push(Number(x[11]));
+        dataS13.push(Number(x[12]));
+        dataS14.push(Number(x[13]));
+        dataS15.push(Number(x[14]));
+        dataS16.push(Number(x[15]));
+        dataS17.push(Number(x[16]));
+        dataS18.push(Number(x[17]));
+        dataS19.push(Number(x[18]));
+      });
+      console.log(dataS19);
       this.showChart = true;
     }
   },

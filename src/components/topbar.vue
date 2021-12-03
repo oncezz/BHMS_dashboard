@@ -64,7 +64,6 @@
           glossy
           label="Trend"
           no-caps
-          disable
         />
       </div>
       <div class="q-pa-sm" v-show="menu != 3">
@@ -76,7 +75,6 @@
           glossy
           label="Trend"
           no-caps
-          disable
         />
       </div>
       <div class="q-pa-sm" v-show="menu == 4">
