@@ -690,6 +690,7 @@ export default {
             marker: {
               enabled: false
             },
+            dashStyle: "longdash",
             data: data[1].data
           },
           {
@@ -702,6 +703,7 @@ export default {
             marker: {
               enabled: false
             },
+            dashStyle: "shortdot",
             data: data[2].data
           },
           {
@@ -714,6 +716,7 @@ export default {
             marker: {
               enabled: false
             },
+            dashStyle: "DashDot",
             data: data[3].data
           },
           {
@@ -726,6 +729,7 @@ export default {
             marker: {
               enabled: false
             },
+            dashStyle: "Solid",
             data: data[4].data
           },
           {
@@ -738,7 +742,8 @@ export default {
             marker: {
               enabled: false
             },
-            data: data[5].data
+            data: data[5].data,
+            visible: false
           }
         ]
       });
