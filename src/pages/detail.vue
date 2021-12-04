@@ -3,8 +3,17 @@
     <top-bar></top-bar>
     <div class="q-pa-xl">
       <div class="row items-center" style="font-size:24px">
-        <div class="col-2" style="font-size: 48px;">
-          {{ labelCol[input.colId - 1] }}
+        <div class="col-2">
+          <div class="goBack row items-center justify-evenly" @click="goBack()">
+            <div class="cursor-pointer">
+              <q-icon
+                name="fas fa-chevron-circle-left"
+                color="white"
+                size="md"
+              />
+            </div>
+            <div class=" q-px-md" style="font-size:30px">Back</div>
+          </div>
         </div>
         <div class="col-1">Duration</div>
         <div class=" inputBox row items-center">
@@ -62,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="col q-pl-xl">
+        <div class="col-2 q-pl-xl">
           <q-btn
             icon="fas fa-chart-line"
             color="indigo-9"
@@ -73,6 +82,9 @@
             @click="plotChart()"
             no-caps
           />
+        </div>
+        <div class="col " style="font-size: 48px;" align="center">
+          {{ labelCol[input.colId - 1] }}
         </div>
       </div>
       <div class="row">
@@ -93,20 +105,8 @@
               ></div>
             </div>
           </div>
-          <div class="q-pa-md">
-            <q-btn
-              icon="fas fa-chevron-circle-left"
-              color="indigo-9"
-              style="width:197px;  height: 61px;"
-              size="xl"
-              glossy
-              label="Back"
-              @click="goBack()"
-              no-caps
-            />
-          </div>
         </div>
-        <div class="col-4" v-show="showChart" style="width:25vw">
+        <div class="col-4" style="width:25vw">
           <div class="q-pt-md q-mt-md q-pl-xl">
             <img src="../../public/image/legendDetail.svg" alt="" />
           </div>
@@ -115,10 +115,20 @@
               <div class="col-5 " style="color:#E4C36C">
                 S1<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col" align="right" v-show="output.s1 != ''">
-                {{ output.s1 }} µε
+              <div class="col" align="right" v-show="showChart">
+                <span
+                  :style="
+                    output.s1i > 2000
+                      ? 'color:#D04B00'
+                      : '' || output.s1i > 1000
+                      ? 'color:#C79F12'
+                      : ''
+                  "
+                  >{{ output.s1 }}</span
+                >
+                µε
               </div>
-              <div class="col" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="!showChart">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -126,10 +136,21 @@
               <div class="col-5 " style="color:#A6B1EF">
                 S2<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col" align="right" v-show="output.s1 != ''">
-                {{ output.s2 }} µε
+              <div class="col" align="right" v-show="showChart">
+                <span
+                  :style="
+                    output.s2i > 2000
+                      ? 'color:#D04B00'
+                      : '' || output.s2i > 1000
+                      ? 'color:#C79F12'
+                      : ''
+                  "
+                >
+                  {{ output.s2 }}</span
+                >
+                µε
               </div>
-              <div class="col" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="!showChart">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -137,10 +158,20 @@
               <div class="col-5 " style="color:#DE7AF8">
                 S3<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col" align="right" v-show="output.s1 != ''">
-                {{ output.s3 }} µε
+              <div class="col" align="right" v-show="showChart">
+                <span
+                  :style="
+                    output.s3i > 2000
+                      ? 'color:#D04B00'
+                      : '' || output.s3i > 1000
+                      ? 'color:#C79F12'
+                      : ''
+                  "
+                  >{{ output.s3 }}</span
+                >
+                µε
               </div>
-              <div class="col" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="!showChart">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -148,10 +179,20 @@
               <div class="col-5 " style="color:#FFFFFF">
                 S4<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col" align="right" v-show="output.s1 != ''">
-                {{ output.s4 }} µε
+              <div class="col" align="right" v-show="showChart">
+                <span
+                  :style="
+                    output.s4i > 2000
+                      ? 'color:#D04B00'
+                      : '' || output.s4i > 1000
+                      ? 'color:#C79F12'
+                      : ''
+                  "
+                  >{{ output.s4 }}</span
+                >
+                µε
               </div>
-              <div class="col" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="!showChart">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -159,10 +200,21 @@
               <div class="col-5 " style="color:#66DFD3">
                 S5<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col" align="right" v-show="output.s1 != ''">
-                {{ output.s5 }} µε
+              <div class="col" align="right" v-show="showChart">
+                <span
+                  :style="
+                    output.s5i > 2000
+                      ? 'color:#D04B00'
+                      : '' || output.s5i > 1000
+                      ? 'color:#C79F12'
+                      : ''
+                  "
+                >
+                  {{ output.s5 }}
+                </span>
+                µε
               </div>
-              <div class="col" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="!showChart">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -215,6 +267,11 @@ export default {
         daynightPick: "Whole day"
       },
       output: {
+        s1i: 0,
+        s2i: 0,
+        s3i: 0,
+        s4i: 0,
+        s5i: 0,
         s1: "",
         s2: "",
         s3: "",
@@ -363,23 +420,28 @@ export default {
         }
       ];
       // หาค่า max
-      this.output.s1 = Number(Math.max.apply(null, data[1].data))
+      this.output.s1i = Number(Math.max.apply(null, data[1].data));
+      this.output.s1 = this.output.s1i
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      this.output.s2 = Number(Math.max.apply(null, data[2].data))
+      this.output.s2i = Number(Math.max.apply(null, data[2].data));
+      this.output.s2 = this.output.s2i
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      this.output.s3 = Number(Math.max.apply(null, data[3].data))
+      this.output.s3i = Number(Math.max.apply(null, data[3].data));
+      this.output.s3 = this.output.s3i
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      this.output.s4 = Number(Math.max.apply(null, data[4].data))
+      this.output.s4i = Number(Math.max.apply(null, data[4].data));
+      this.output.s4 = this.output.s4i
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      this.output.s5 = Number(Math.max.apply(null, data[5].data))
+      this.output.s5i = Number(Math.max.apply(null, data[5].data));
+      this.output.s5 = this.output.s5i
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -440,6 +502,9 @@ export default {
           enabled: true,
           width: "1920px",
           chartOptions: {
+            // chart: {
+            //   backgroundColor: "#FFFFFF"
+            // },
             title: {
               style: { fontSize: "12px" }
             },
@@ -605,5 +670,12 @@ export default {
 }
 .legendText {
   font-size: 40px;
+}
+.goBack {
+  cursor: pointer;
+  border: 2px solid white;
+  border-radius: 10px;
+  width: 200px;
+  height: 63px;
 }
 </style>
