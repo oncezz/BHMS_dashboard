@@ -15,6 +15,7 @@
               v-model="input.monthStart"
               dark
               style="font-size:20px"
+              @input="changeDuration()"
             />
           </div>
           <div class="q-pr-md">
@@ -24,6 +25,7 @@
               v-model="input.yearStart"
               dark
               style="font-size:20px"
+              @input="changeDuration()"
             />
           </div>
           <div class="q-px-md">to</div>
@@ -34,6 +36,7 @@
               v-model="input.monthEnd"
               dark
               style="font-size:20px"
+              @input="changeDuration()"
             />
           </div>
           <div class="q-pr-md">
@@ -43,6 +46,7 @@
               v-model="input.yearEnd"
               dark
               style="font-size:20px"
+              @input="changeDuration()"
             />
           </div>
           <div class="col row items-center q-pl-lg">
@@ -53,6 +57,7 @@
                 v-model="input.daynightPick"
                 dark
                 style="font-size:20px;width:150px"
+                @input="changeDuration()"
               />
             </div>
           </div>
@@ -69,21 +74,9 @@
             no-caps
           />
         </div>
-        <div class="col-2" align="right">
-          <q-btn
-            icon="fas fa-print"
-            color="indigo-9"
-            style="width:197px;  height: 61px;"
-            size="xl"
-            glossy
-            label="Print"
-            no-caps
-            disable
-          />
-        </div>
       </div>
       <div class="row">
-        <div class="chartArea col">
+        <div class=" col">
           <!-- chart  -->
           <div class=" q-pa-md " style="height:calc( 100vh - 340px);">
             <div
@@ -91,10 +84,13 @@
               align="center"
               style="font-size:40px;line-height:calc( 100vh - 340px);"
             >
-              Please select duration above.
+              {{ beforePlot }}
             </div>
             <div class="q-py-md" v-show="showChart">
-              <div id="chart1" style="height:calc( 100vh - 380px);"></div>
+              <div
+                id="chart1"
+                style="height:calc( 100vh - 380px);width:70vw"
+              ></div>
             </div>
           </div>
           <div class="q-pa-md">
@@ -110,63 +106,63 @@
             />
           </div>
         </div>
-        <div class="col-4">
-          <div class="q-pt-md q-mt-md q-pl-md">
+        <div class="col-4" v-show="showChart" style="width:25vw">
+          <div class="q-pt-md q-mt-md q-pl-xl">
             <img src="../../public/image/legendDetail.svg" alt="" />
           </div>
-          <div class="legendText q-pl-xl q-ml-md">
+          <div class="legendText q-px-xl ">
             <div class="row">
-              <div class="col-3" style="color:#E4C36C">
+              <div class="col-5 " style="color:#E4C36C">
                 S1<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right" v-show="output.s1 != ''">
+              <div class="col" align="right" v-show="output.s1 != ''">
                 {{ output.s1 }} µε
               </div>
-              <div class="col-5" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="output.s1 == ''">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
             <div class="row">
-              <div class="col-3" style="color:#A6B1EF">
+              <div class="col-5 " style="color:#A6B1EF">
                 S2<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right" v-show="output.s1 != ''">
+              <div class="col" align="right" v-show="output.s1 != ''">
                 {{ output.s2 }} µε
               </div>
-              <div class="col-5" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="output.s1 == ''">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
             <div class="row">
-              <div class="col-3" style="color:#DE7AF8">
+              <div class="col-5 " style="color:#DE7AF8">
                 S3<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right" v-show="output.s1 != ''">
+              <div class="col" align="right" v-show="output.s1 != ''">
                 {{ output.s3 }} µε
               </div>
-              <div class="col-5" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="output.s1 == ''">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
             <div class="row">
-              <div class="col-3" style="color:#FFFFFF">
+              <div class="col-5 " style="color:#FFFFFF">
                 S4<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right" v-show="output.s1 != ''">
+              <div class="col" align="right" v-show="output.s1 != ''">
                 {{ output.s4 }} µε
               </div>
-              <div class="col-5" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="output.s1 == ''">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
             <div class="row">
-              <div class="col-3" style="color:#66DFD3">
+              <div class="col-5 " style="color:#66DFD3">
                 S5<sub style="font-size: 24px;">max</sub> =
               </div>
-              <div class="col-5" align="right" v-show="output.s1 != ''">
+              <div class="col" align="right" v-show="output.s1 != ''">
                 {{ output.s5 }} µε
               </div>
-              <div class="col-5" align="right" v-show="output.s1 == ''">
+              <div class="col" align="right" v-show="output.s1 == ''">
                 <span class="q-pr-xl q-mr-md">- </span>µε
               </div>
             </div>
@@ -186,6 +182,7 @@ export default {
   },
   data() {
     return {
+      beforePlot: "Please select duration above.",
       showChart: false,
       labelCol: [
         "M29/24",
@@ -261,19 +258,24 @@ export default {
       //หาค่า timeStartUnix / timeEndUnix millisecond
       let mStart = this.monthList.indexOf(this.input.monthStart) + 1;
       let startDateTemp = this.input.yearStart + "." + mStart + ".01";
+      //      console.log(startDateTemp);
       let startDateUnix = new Date(startDateTemp).getTime();
-
+      //      console.log(this.input.monthEnd);
       let mEnd = this.monthList.indexOf(this.input.monthEnd) + 2;
+      //      console.log(mEnd);
       let yEnd = this.input.yearEnd;
       if (mEnd > 12) {
         mEnd = 1;
         yEnd += 1;
       }
       let endDateTemp = yEnd + "." + mEnd + ".01";
+      //     console.log(endDateTemp);
       let dt = new Date(endDateTemp);
 
       dt.setDate(dt.getDate() - 1);
-      endDateTemp = dt.getFullYear() + "." + dt.getMonth() + "." + dt.getDate();
+      endDateTemp =
+        dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
+      //      console.log(endDateTemp);
       let endDateUnix = new Date(endDateTemp).getTime();
 
       let dataTimestamp = [];
@@ -289,6 +291,7 @@ export default {
           startTime: startDateUnix,
           endTime: endDateUnix
         };
+        //       console.log(temp);
         let url = this.serverpath + "fe_detailwholeday.php";
         let res = await axios.post(url, JSON.stringify(temp));
 
@@ -412,7 +415,8 @@ export default {
             },
             style: {
               fontSize: "16px"
-            }
+            },
+            rotation: -90
           }
         },
         yAxis: [
@@ -432,7 +436,32 @@ export default {
             }
           }
         ],
-
+        exporting: {
+          enabled: true,
+          width: "1920px",
+          chartOptions: {
+            title: {
+              style: { fontSize: "12px" }
+            },
+            subtitle: {
+              style: { fontSize: "8px" }
+            },
+            yAxis: [
+              {
+                labels: {
+                  style: { fontSize: "6px" }
+                }
+              }
+            ],
+            xAxis: [
+              {
+                labels: {
+                  style: { fontSize: "6px" }
+                }
+              }
+            ]
+          }
+        },
         plotOptions: {
           area: {
             fillColor: {
@@ -549,6 +578,10 @@ export default {
         this.input.yearStart = this.yearEnd - 1;
         this.input.monthEnd = this.monthList[11];
       }
+    },
+    changeDuration() {
+      this.beforePlot = "Please click Plot button.";
+      this.showChart = false;
     }
   },
   mounted() {
@@ -558,14 +591,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.printBtn {
-  background: #3c4dae;
-  width: 197px;
-  height: 61px;
-  border-radius: 10px;
-  line-height: 61px;
-  font-size: 24px;
-}
 .inputBox {
   border: 3px solid white;
   border-radius: 10px;

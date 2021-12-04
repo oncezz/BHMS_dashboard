@@ -4,7 +4,10 @@
       <top-bar :menu="3"></top-bar>
     </div>
     <!-- Duration / Plot type -->
-    <div class="row q-mx-xl justify-evenly" style="font-size:20px">
+    <div
+      class="row q-pt-md justify-between"
+      style="font-size:20px;width:50%;margin:auto;min-width:1600px;"
+    >
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Duration</div>
         <div class="q-pa-md">
@@ -13,6 +16,7 @@
             v-model="monthStart"
             dark
             style="font-size:20px;width:76px"
+            @input="changeDuration()"
           />
         </div>
         <div class="q-pa-md">
@@ -21,6 +25,7 @@
             v-model="yearStart"
             dark
             style="font-size:20px;width:88px"
+            @input="changeDuration()"
           />
         </div>
         to
@@ -30,6 +35,7 @@
             v-model="monthEnd"
             dark
             style="font-size:20px;width:76px"
+            @input="changeDuration()"
           />
         </div>
         <div class="q-pa-md">
@@ -38,18 +44,42 @@
             v-model="yearEnd"
             dark
             style="font-size:20px;width:88px"
+            @input="changeDuration()"
           />
         </div>
       </div>
+
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Plot type :</div>
         <div class="q-gutter-sm">
-          <q-radio dark v-model="plotType" val="min" label="Min value" />
-          <q-radio dark v-model="plotType" val="max" label="Max value" />
-          <q-radio dark v-model="plotType" val="avg" label="Average value" />
+          <q-radio
+            dark
+            v-model="plotType"
+            val="min"
+            label="Min value"
+            color="blue-3"
+            @input="changeDuration()"
+          />
+          <q-radio
+            dark
+            v-model="plotType"
+            val="max"
+            label="Max value"
+            color="blue-3"
+            @input="changeDuration()"
+          />
+          <q-radio
+            dark
+            v-model="plotType"
+            val="avg"
+            label="Average value"
+            color="blue-3"
+            @input="changeDuration()"
+          />
         </div>
       </div>
-      <div class="col-1 q-my-md">
+
+      <div class="" style="padding-top:12px">
         <q-btn
           icon="fas fa-chart-line"
           color="indigo-9"
@@ -70,13 +100,13 @@
         align="center"
         style="font-size:40px;line-height: calc(100vh - 470px);"
       >
-        Please select duration above.
+        {{ beforePlot }}
       </div>
       <div
         id="chart1"
-        style="height: calc(100vh - 400px);"
+        style="height: calc(100vh - 420px);"
         v-show="showChart"
-        class="q-pt-md"
+        class="q-pt-lg"
       ></div>
     </div>
     <!-- Control box under chart area -->
@@ -291,6 +321,7 @@ export default {
   },
   data() {
     return {
+      beforePlot: "Please select duration above.",
       showChart: false,
       monthList: [
         "Jan",
@@ -427,6 +458,11 @@ export default {
       this.colSG[index].status = show;
       this.plotChartReal();
     },
+    // เปลี่ยน เดือน/ปี ใน duration -- max min avg ใน plot type
+    changeDuration() {
+      this.beforePlot = "Please click Plot button.";
+      this.showChart = false;
+    },
     //กำหนดค่าเริ่มต้นของช่วง trend
     setDuration() {
       let d = new Date();
@@ -456,7 +492,8 @@ export default {
       let dt = new Date(endDateTemp);
 
       dt.setDate(dt.getDate() - 1);
-      endDateTemp = dt.getFullYear() + "." + dt.getMonth() + "." + dt.getDate();
+      endDateTemp =
+        dt.getFullYear() + "." + (dt.getMonth() + 1) + "." + dt.getDate();
       let endDateUnix = new Date(endDateTemp).getTime();
 
       let temp = {
@@ -471,7 +508,7 @@ export default {
       } else if (this.plotType == "max") {
         url = this.serverpath + "fe_loadtrendmax.php";
       }
-
+      //     console.log(startDateTemp, endDateTemp);
       let res = await axios.post(url, JSON.stringify(temp));
       let dataTimestamp = [];
       let dataS1 = [];
@@ -646,7 +683,8 @@ export default {
             },
             style: {
               fontSize: "16px"
-            }
+            },
+            rotation: -90
           }
         },
         exporting: {
@@ -662,14 +700,14 @@ export default {
             yAxis: [
               {
                 labels: {
-                  style: { fontSize: "2px" }
+                  style: { fontSize: "6px" }
                 }
               }
             ],
             xAxis: [
               {
                 labels: {
-                  style: { fontSize: "2px" }
+                  style: { fontSize: "6px" }
                 }
               }
             ]
@@ -1002,7 +1040,7 @@ export default {
 }
 .chartArea {
   margin: auto;
-  width: 80%;
+  width: 90%;
   height: calc(100vh - 470px);
 }
 .btDiv {
