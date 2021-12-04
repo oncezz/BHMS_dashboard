@@ -76,10 +76,11 @@
         id="chart1"
         style="height: calc(100vh - 400px);"
         v-show="showChart"
+        class="q-pt-md"
       ></div>
     </div>
     <!-- Control box under chart area -->
-    <div class="btDiv" style="font-size:20px;">
+    <div class="btDiv" v-show="showChart" style="font-size:20px;">
       <div class="row items-center">
         <div class="col-1">line1</div>
         <div class="col-1 " align="center">LF</div>
@@ -92,7 +93,7 @@
           <div
             v-show="item.status"
             class="btnCol"
-            @click="item.status = false"
+            @click="changeLF(index, false)"
             :style="
               index % 12 == 0
                 ? 'background-color:#3C4DAE'
@@ -122,7 +123,7 @@
           <div
             v-show="!item.status"
             class="btnCol bg-blue-grey-10"
-            @click="item.status = true"
+            @click="changeLF(index, true)"
             style="color:black;"
           >
             {{ item.name }}
@@ -141,7 +142,7 @@
           <div
             v-show="item.status"
             class="btnCol"
-            @click="item.status = false"
+            @click="changeMF(index, false)"
             :style="
               index % 12 == 0
                 ? 'background-color:#3C4DAE'
@@ -171,7 +172,7 @@
           <div
             v-show="!item.status"
             class="btnCol bg-blue-grey-10"
-            @click="item.status = true"
+            @click="changeMF(index, true)"
             style="color:black;"
           >
             {{ item.name }}
@@ -190,7 +191,7 @@
           <div
             v-show="item.status"
             class="btnCol"
-            @click="item.status = false"
+            @click="changeSS(index, false)"
             :style="
               index % 12 == 0
                 ? 'background-color:#3C4DAE'
@@ -220,7 +221,7 @@
           <div
             v-show="!item.status"
             class="btnCol bg-blue-grey-10"
-            @click="item.status = true"
+            @click="changeSS(index, true)"
             style="color:black;"
           >
             {{ item.name }}
@@ -239,7 +240,7 @@
           <div
             v-show="item.status"
             class="btnCol"
-            @click="item.status = false"
+            @click="changeSG(index, false)"
             :style="
               index % 12 == 0
                 ? 'background-color:#3C4DAE'
@@ -269,7 +270,7 @@
           <div
             v-show="!item.status"
             class="btnCol bg-blue-grey-10"
-            @click="item.status = true"
+            @click="changeSG(index, true)"
             style="color:black;"
           >
             {{ item.name }}
@@ -328,11 +329,11 @@ export default {
       colLF: [
         {
           name: "M30/07",
-          status: false
+          status: true
         },
         {
           name: "M31/02",
-          status: true
+          status: false
         },
         {
           name: "M34/02",
@@ -365,7 +366,7 @@ export default {
           status: false
         },
         {
-          name: "M40/04",
+          name: "M40/40",
           status: false
         },
         {
@@ -373,7 +374,7 @@ export default {
           status: false
         },
         {
-          name: "M42/04",
+          name: "M42/40",
           status: false
         },
         {
@@ -388,7 +389,7 @@ export default {
       colSS: [
         {
           name: "M36/16",
-          status: false
+          status: true
         },
         {
           name: "M36/18",
@@ -398,16 +399,34 @@ export default {
       colSG: [
         {
           name: "M33/02",
-          status: false
+          status: true
         },
         {
           name: "M35/23",
           status: false
         }
-      ]
+      ],
+      titleChart: "",
+      data: []
     };
   },
   methods: {
+    changeMF(index, show) {
+      this.colMF[index].status = show;
+      this.plotChartReal();
+    },
+    changeLF(index, show) {
+      this.colLF[index].status = show;
+      this.plotChartReal();
+    },
+    changeSS(index, show) {
+      this.colSS[index].status = show;
+      this.plotChartReal();
+    },
+    changeSG(index, show) {
+      this.colSG[index].status = show;
+      this.plotChartReal();
+    },
     //กำหนดค่าเริ่มต้นของช่วง trend
     setDuration() {
       let d = new Date();
@@ -497,9 +516,8 @@ export default {
         dataS18.push(Number(x[17]));
         dataS19.push(Number(x[18]));
       });
-      this.showChart = true;
 
-      let titleChart =
+      this.titleChart =
         "Trend of changes in " +
         this.plotType +
         " strain from " +
@@ -511,7 +529,7 @@ export default {
         " " +
         this.yearEnd;
 
-      let data = [
+      this.data = [
         {
           name: "timestamp",
           data: dataTimestamp
@@ -593,12 +611,16 @@ export default {
           data: dataS19
         }
       ];
+      this.plotChartReal();
+    },
+    plotChartReal() {
+      this.showChart = true;
       Highcharts.chart("chart1", {
         chart: {
           zoomType: "x"
         },
         title: {
-          text: titleChart
+          text: this.titleChart
         },
 
         tooltip: {
@@ -617,7 +639,7 @@ export default {
         // },
         xAxis: {
           type: "datetime",
-          categories: data[0].data,
+          categories: this.data[0].data,
           labels: {
             formatter: function() {
               return Highcharts.dateFormat("%d-%m-%Y", this.value);
@@ -627,6 +649,33 @@ export default {
             }
           }
         },
+        exporting: {
+          enabled: true,
+          width: "1920px",
+          chartOptions: {
+            title: {
+              style: { fontSize: "12px" }
+            },
+            subtitle: {
+              style: { fontSize: "8px" }
+            },
+            yAxis: [
+              {
+                labels: {
+                  style: { fontSize: "2px" }
+                }
+              }
+            ],
+            xAxis: [
+              {
+                labels: {
+                  style: { fontSize: "2px" }
+                }
+              }
+            ]
+          }
+        },
+
         yAxis: [
           {
             min: 0,
@@ -682,8 +731,8 @@ export default {
         series: [
           {
             type: "spline",
-            name: "S1",
-            color: "#E4C36C",
+            name: "M30/07",
+            color: "#3C4DAE",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -691,12 +740,195 @@ export default {
               enabled: false
             },
             dashStyle: "longdash",
-            data: data[1].data
+            data: this.data[3].data,
+            visible: this.colLF[0].status
           },
           {
             type: "spline",
-            name: "S2",
-            color: "#A6B1EF",
+            name: "M31/02",
+            color: "#9C27B0",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "longdash",
+            data: this.data[4].data,
+            visible: this.colLF[1].status
+          },
+          {
+            type: "spline",
+            name: "M34/02",
+            color: "#FF9800",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "longdash",
+            data: this.data[7].data,
+            visible: this.colLF[2].status
+          },
+          {
+            type: "spline",
+            name: "M34/05",
+            color: "#4CAF50",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "longdash",
+            data: this.data[8].data,
+            visible: this.colLF[3].status
+          },
+          {
+            type: "spline",
+            name: "M29/24",
+            color: "#3C4DAE",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[1].data,
+            visible: this.colMF[0].status
+          },
+          {
+            type: "spline",
+            name: "M30/01",
+            color: "#9C27B0",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[2].data,
+            visible: this.colMF[1].status
+          },
+          {
+            type: "spline",
+            name: "M36/20",
+            color: "#FF9800",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[12].data,
+            visible: this.colMF[2].status
+          },
+          {
+            type: "spline",
+            name: "M38/17",
+            color: "#4CAF50",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[13].data,
+            visible: this.colMF[3].status
+          },
+          {
+            type: "spline",
+            name: "M39/06",
+            color: "#009688",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[14].data,
+            visible: this.colMF[4].status
+          },
+          {
+            type: "spline",
+            name: "M40/40",
+            color: "#795548",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[15].data,
+            visible: this.colMF[5].status
+          },
+          {
+            type: "spline",
+            name: "M41/09",
+            color: "#FF5722",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[16].data,
+            visible: this.colMF[6].status
+          },
+          {
+            type: "spline",
+            name: "M42/20",
+            color: "#FFC107",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[17].data,
+            visible: this.colMF[7].status
+          },
+          {
+            type: "spline",
+            name: "M43/03",
+            color: "#00BCD4",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[18].data,
+            visible: this.colMF[8].status
+          },
+          {
+            type: "spline",
+            name: "M43/19",
+            color: "#9E9E9E",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "solid",
+            data: this.data[19].data,
+            visible: this.colMF[9].status
+          },
+          {
+            type: "spline",
+            name: "M36/16",
+            color: "#3C4DAE",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -704,12 +936,27 @@ export default {
               enabled: false
             },
             dashStyle: "shortdot",
-            data: data[2].data
+            data: this.data[10].data,
+            visible: this.colSS[0].status
           },
           {
             type: "spline",
-            name: "S3",
-            color: "#DE7AF8",
+            name: "M36/18",
+            color: "#9C27B0",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "shotdot",
+            data: this.data[11].data,
+            visible: this.colSS[1].status
+          },
+          {
+            type: "spline",
+            name: "M33/02",
+            color: "#3C4DAE",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -717,38 +964,28 @@ export default {
               enabled: false
             },
             dashStyle: "DashDot",
-            data: data[3].data
+            data: this.data[6].data,
+            visible: this.colSG[0].status
           },
           {
             type: "spline",
-            name: "S4",
-            color: "#FFFFFF",
+            name: "M35/23",
+            color: "#9C27B0",
             tooltip: {
               valueSuffix: " µε"
             },
             marker: {
               enabled: false
             },
-            dashStyle: "Solid",
-            data: data[4].data
-          },
-          {
-            type: "spline",
-            name: "S5",
-            color: "#66DFD3",
-            tooltip: {
-              valueSuffix: " µε"
-            },
-            marker: {
-              enabled: false
-            },
-            data: data[5].data,
-            visible: false
+            dashStyle: "DashDot",
+            data: this.data[9].data,
+            visible: this.colSG[1].status
           }
         ]
       });
     }
   },
+
   mounted() {
     this.setDuration();
   }
