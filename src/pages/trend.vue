@@ -1044,7 +1044,8 @@ export default {
   height: 50px;
 }
 .borderWhite {
-  border: 1px solid white;
+  border: 3px solid white;
+  border-radius: 10px;
   font-size: 20px;
 }
 .chartArea {

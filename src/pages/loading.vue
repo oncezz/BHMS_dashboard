@@ -1,23 +1,14 @@
 <template>
   <div class="fullscreen">
-    <div class="fixed-center" style="width:100%;max-width:1200px;">
-      <div class="row ">
-        <div class="col-1" style="width:260px;">
-          <img
-            src="../../public/image/logo.svg"
-            alt=""
-            width="260px"
-            height="260px"
-          />
-        </div>
-        <div class="q-pt-md col">
-          <div class="fontH ">BHMS Dashboard</div>
-          <div class="fontFo">Burapha Withi Express Health Monitor System</div>
-        </div>
-      </div>
+    <div class="fixed-center q-pr-md" style="width:100%;" align="center">
+      <img
+        src="../../public/image/loadingLogo.svg"
+        alt=""
+        style="width:90%;max-width:900px;"
+      />
     </div>
     <div class="footer">
-      <div class="lowerFont">Loading data from datalogger..</div>
+      <div class="lowerFont">Loading...</div>
       <div class="pathLoad">
         <div class="loadding" :style="{ width: loadingPercent + '%' }"></div>
       </div>
@@ -64,19 +55,19 @@ export default {
 } // loading
 .pathLoad {
   background-color: #c4c4c4;
-  height: 30px;
+  height: 20px;
   width: 90%;
   margin: auto;
   border-radius: 15px;
 }
 .loadding {
   background-color: #00bfab;
-  height: 30px;
+  height: 20px;
   width: 0;
   border-radius: 15px;
 }
 .footer {
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   position: absolute;
   bottom: 0px;
   width: 100%;
