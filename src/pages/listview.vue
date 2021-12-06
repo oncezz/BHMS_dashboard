@@ -63,7 +63,7 @@
       </div>
     </div>
     <!-- กล่องด้านล่าง -->
-    <div class="row fixed-bottom">
+    <div class="row fixed-bottom q-pb-md">
       <strain-listview></strain-listview>
       <level-damage></level-damage>
     </div>
@@ -215,8 +215,8 @@ export default {
 
 <style lang="scss" scoped>
 .rowBox {
-  height: calc(100vh - 250px);
-  overflow-y: scroll;
+  height: calc(100vh - 280px);
+  overflow-y: auto;
 }
 .colBor {
   cursor: pointer;

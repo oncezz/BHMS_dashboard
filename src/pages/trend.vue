@@ -669,6 +669,7 @@ export default {
 
         tooltip: {
           shared: true,
+          valueDecimals: 2,
           style: {
             fontSize: "14px"
           }

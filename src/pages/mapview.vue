@@ -239,7 +239,7 @@
       <div class="" style="width:12%"></div>
       <div class=" sta" style="width:6%" align="center">44+000</div>
     </div>
-    <div class="row fixed-bottom">
+    <div class="row fixed-bottom q-pb-md">
       <strain-mapview></strain-mapview>
       <level-damage></level-damage>
     </div>
