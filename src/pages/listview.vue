@@ -127,27 +127,7 @@ export default {
         "M43/03",
         "M43/19"
       ],
-      strainCol: [
-        [1, -100, 3, 1005, 5],
-        [4, 5, 6, 2005, 8],
-        [11, 12, 13, 14, 1005],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [-1, -5, -10, -19, -20],
-        [16, 17, 18, 19, 2045],
-        [1086, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [1649, 17, 18, 19, 20],
-        [16, 17, 18, 19, 2075],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [16, 17, 18, 19, 20],
-        [16, 17, 1458, 19, 20],
-        [-16, -17, -18, -19, -20]
-      ],
+      strainCol: [],
       data: []
     };
   },
@@ -221,7 +201,7 @@ export default {
 
       this.strainCol.push(150);
       this.strainCol.pop();
-      console.log(this.strainCol);
+      // console.log(this.strainCol);
     }
   },
   async mounted() {
@@ -235,7 +215,8 @@ export default {
 
 <style lang="scss" scoped>
 .rowBox {
-  height: calc(100vh-410px);
+  height: calc(100vh - 250px);
+  overflow-y: scroll;
 }
 .colBor {
   cursor: pointer;

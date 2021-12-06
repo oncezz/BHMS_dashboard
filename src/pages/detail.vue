@@ -369,7 +369,7 @@ export default {
         };
         let url = this.serverpath + "fe_detaildaynight.php";
         let res = await axios.post(url, JSON.stringify(temp));
-        console.log(res.data);
+        // console.log(res.data);
         res.data.forEach(x => {
           dataTimestamp.push(Number(x.timestamp));
           dataS1.push(Number(x[0]));

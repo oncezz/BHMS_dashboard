@@ -24,7 +24,7 @@
           ></div>
           <div class="colorColR" v-show="strainCol[1] > 2000"></div>
         </div>
-        <div class="col-3 q-pt-xs">
+        <div class="col-4 q-pt-xs">
           <img src="../../public/image/colUp.svg" alt="" />
           <div class="levelDamage">{{ typeCol }}</div>
           <img src="../../public/image/colDown.svg" alt="" />
@@ -126,7 +126,7 @@ export default {
   line-height: 0.5;
   color: red;
   background-color: #c4c4c4;
-  width: 35px;
+  width: 29px;
   height: 8px;
 }
 .colorCol5 {
@@ -140,7 +140,7 @@ export default {
 .colorColG {
   margin: auto;
   background-color: #00bfab;
-  width: 35px;
+  width: 29px;
   height: 8px;
 }
 .colorCol5G {
@@ -151,7 +151,7 @@ export default {
 .colorColY {
   margin: auto;
   background-color: #c79f12;
-  width: 35px;
+  width: 29px;
   height: 8px;
 }
 .colorCol5Y {
@@ -162,7 +162,7 @@ export default {
 .colorColR {
   margin: auto;
   background-color: #d04b00;
-  width: 35px;
+  width: 29px;
   height: 8px;
 }
 .colorCol5R {

@@ -5,12 +5,12 @@
     </div>
     <!-- Duration / Plot type -->
     <div
-      class="row q-pt-md justify-between"
-      style="font-size:20px;width:50%;margin:auto;min-width:1600px;"
+      class="row q-pt-md justify-center"
+      style="font-size:20px;width:50%;margin:auto;min-width:1400px;"
     >
-      <div class="row items-center borderWhite q-px-lg">
-        <div class="">Duration</div>
-        <div class="q-pa-md">
+      <div class="row items-center borderWhite q-px-md">
+        <div class="q-pr-sm">Duration :</div>
+        <div class="q-pr-sm">
           <q-select
             :options="monthList"
             v-model="monthStart"
@@ -19,7 +19,7 @@
             @input="changeDuration()"
           />
         </div>
-        <div class="q-pa-md">
+        <div class="q-pr-sm">
           <q-select
             :options="yearList"
             v-model="yearStart"
@@ -28,8 +28,8 @@
             @input="changeDuration()"
           />
         </div>
-        to
-        <div class="q-pa-md">
+        <div>to</div>
+        <div class="q-px-sm">
           <q-select
             :options="monthList"
             v-model="monthEnd"
@@ -38,7 +38,7 @@
             @input="changeDuration()"
           />
         </div>
-        <div class="q-pa-md">
+        <div class="">
           <q-select
             :options="yearList"
             v-model="yearEnd"
@@ -48,10 +48,18 @@
           />
         </div>
       </div>
-
+      <div class="q-pa-sm"></div>
       <div class="row items-center borderWhite q-px-lg">
         <div class="">Plot type :</div>
         <div class="q-gutter-sm">
+          <q-radio
+            dark
+            v-model="plotType"
+            val="avg"
+            label="Average value"
+            color="blue-3"
+            @input="changeDuration()"
+          />
           <q-radio
             dark
             v-model="plotType"
@@ -68,22 +76,13 @@
             color="blue-3"
             @input="changeDuration()"
           />
-          <q-radio
-            dark
-            v-model="plotType"
-            val="avg"
-            label="Average value"
-            color="blue-3"
-            @input="changeDuration()"
-          />
         </div>
       </div>
-
-      <div class="" style="padding-top:12px">
+      <div class="q-pa-sm"></div>
+      <div class="" style="">
         <q-btn
-          icon="fas fa-chart-line"
           color="indigo-9"
-          style="width:197px;  height: 61px;"
+          class="plotBtn"
           size="xl"
           glossy
           label="Plot"
@@ -104,15 +103,17 @@
       </div>
       <div
         id="chart1"
-        style="height: calc(100vh - 420px);"
+        class="q-pt-lg "
+        style="height: calc(100vh - 380px);"
         v-show="showChart"
-        class="q-pt-lg"
       ></div>
     </div>
     <!-- Control box under chart area -->
     <div class="btDiv" v-show="showChart" style="font-size:20px;">
       <div class="row items-center">
-        <div class="col-1">line1</div>
+        <div class="col-1" align="right">
+          <img class="q-py-sm" src="../../public/image/line1.svg" alt="" />
+        </div>
         <div class="col-1 " align="center">LF</div>
         <div
           class="col-1"
@@ -126,11 +127,11 @@
             @click="changeLF(index, false)"
             :style="
               index % 12 == 0
-                ? 'background-color:#3C4DAE'
+                ? 'background-color:#00BCD4'
                 : '' || index % 12 == 1
-                ? 'background-color:#9C27B0'
+                ? 'background-color:#FF0000'
                 : '' || index % 12 == 2
-                ? 'background-color:#FF9800'
+                ? 'background-color:#7986CB'
                 : '' || '' || index % 12 == 3
                 ? 'background-color:#4CAF50'
                 : '' || index % 12 == 4
@@ -142,7 +143,7 @@
                 : '' || index % 12 == 7
                 ? 'background-color: #FFC107'
                 : '' || index % 12 == 8
-                ? 'background-color:  #00BCD4'
+                ? 'background-color:  #9C27B0'
                 : '' || index % 12 == 9
                 ? 'background-color:  #9E9E9E'
                 : ''
@@ -161,7 +162,9 @@
         </div>
       </div>
       <div class="row items-center q-my-sm">
-        <div class="col-1">line2</div>
+        <div class="col-1" align="right">
+          <img class="q-py-sm" src="../../public/image/line2.svg" alt="" />
+        </div>
         <div class="col-1 " align="center">MF</div>
         <div
           class="col-1"
@@ -175,11 +178,11 @@
             @click="changeMF(index, false)"
             :style="
               index % 12 == 0
-                ? 'background-color:#3C4DAE'
+                ? 'background-color:#00BCD4'
                 : '' || index % 12 == 1
-                ? 'background-color:#9C27B0'
+                ? 'background-color:#FF0000'
                 : '' || index % 12 == 2
-                ? 'background-color:#FF9800'
+                ? 'background-color:#7986CB'
                 : '' || '' || index % 12 == 3
                 ? 'background-color:#4CAF50'
                 : '' || index % 12 == 4
@@ -191,7 +194,7 @@
                 : '' || index % 12 == 7
                 ? 'background-color: #FFC107'
                 : '' || index % 12 == 8
-                ? 'background-color:  #00BCD4'
+                ? 'background-color:  #9C27B0'
                 : '' || index % 12 == 9
                 ? 'background-color:  #9E9E9E'
                 : ''
@@ -210,7 +213,9 @@
         </div>
       </div>
       <div class="row items-center q-my-sm">
-        <div class="col-1 ">line3</div>
+        <div class="col-1 " align="right">
+          <img class="q-py-sm" src="../../public/image/line3.svg" alt="" />
+        </div>
         <div class="col-1 " align="center">SS</div>
         <div
           class="col-1"
@@ -224,11 +229,11 @@
             @click="changeSS(index, false)"
             :style="
               index % 12 == 0
-                ? 'background-color:#3C4DAE'
+                ? 'background-color:#00BCD4'
                 : '' || index % 12 == 1
-                ? 'background-color:#9C27B0'
+                ? 'background-color:#FF0000'
                 : '' || index % 12 == 2
-                ? 'background-color:#FF9800'
+                ? 'background-color:#7986CB'
                 : '' || '' || index % 12 == 3
                 ? 'background-color:#4CAF50'
                 : '' || index % 12 == 4
@@ -240,7 +245,7 @@
                 : '' || index % 12 == 7
                 ? 'background-color: #FFC107'
                 : '' || index % 12 == 8
-                ? 'background-color:  #00BCD4'
+                ? 'background-color:  #9C27B0'
                 : '' || index % 12 == 9
                 ? 'background-color:  #9E9E9E'
                 : ''
@@ -259,7 +264,9 @@
         </div>
       </div>
       <div class="row items-center q-my-sm">
-        <div class="col-1 ">line4</div>
+        <div class="col-1 " align="right">
+          <img class="q-py-sm" src="../../public/image/line4.svg" alt="" />
+        </div>
         <div class="col-1 " align="center">SG</div>
         <div
           class="col-1"
@@ -273,11 +280,11 @@
             @click="changeSG(index, false)"
             :style="
               index % 12 == 0
-                ? 'background-color:#3C4DAE'
+                ? 'background-color:#00BCD4'
                 : '' || index % 12 == 1
-                ? 'background-color:#9C27B0'
+                ? 'background-color:#FF0000'
                 : '' || index % 12 == 2
-                ? 'background-color:#FF9800'
+                ? 'background-color:#7986CB'
                 : '' || '' || index % 12 == 3
                 ? 'background-color:#4CAF50'
                 : '' || index % 12 == 4
@@ -289,7 +296,7 @@
                 : '' || index % 12 == 7
                 ? 'background-color: #FFC107'
                 : '' || index % 12 == 8
-                ? 'background-color:  #00BCD4'
+                ? 'background-color:  #9C27B0'
                 : '' || index % 12 == 9
                 ? 'background-color:  #9E9E9E'
                 : ''
@@ -770,7 +777,7 @@ export default {
           {
             type: "spline",
             name: "M30/07",
-            color: "#3C4DAE",
+            color: "#00BCD4",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -784,7 +791,7 @@ export default {
           {
             type: "spline",
             name: "M31/02",
-            color: "#9C27B0",
+            color: "#FF0000",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -798,7 +805,7 @@ export default {
           {
             type: "spline",
             name: "M34/02",
-            color: "#FF9800",
+            color: "#7986CB",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -826,7 +833,7 @@ export default {
           {
             type: "spline",
             name: "M29/24",
-            color: "#3C4DAE",
+            color: "#00BCD4",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -840,7 +847,7 @@ export default {
           {
             type: "spline",
             name: "M30/01",
-            color: "#9C27B0",
+            color: "#FF0000",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -854,7 +861,7 @@ export default {
           {
             type: "spline",
             name: "M36/20",
-            color: "#FF9800",
+            color: "#7986CB",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -938,7 +945,7 @@ export default {
           {
             type: "spline",
             name: "M43/03",
-            color: "#00BCD4",
+            color: "#9C27B0",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -966,7 +973,7 @@ export default {
           {
             type: "spline",
             name: "M36/16",
-            color: "#3C4DAE",
+            color: "#00BCD4",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -980,21 +987,21 @@ export default {
           {
             type: "spline",
             name: "M36/18",
-            color: "#9C27B0",
+            color: "#FF0000",
             tooltip: {
               valueSuffix: " µε"
             },
             marker: {
               enabled: false
             },
-            dashStyle: "shotdot",
+            dashStyle: "shortdot",
             data: this.data[11].data,
             visible: this.colSS[1].status
           },
           {
             type: "spline",
             name: "M33/02",
-            color: "#3C4DAE",
+            color: "#00BCD4",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -1008,7 +1015,7 @@ export default {
           {
             type: "spline",
             name: "M35/23",
-            color: "#9C27B0",
+            color: "#FF0000",
             tooltip: {
               valueSuffix: " µε"
             },
@@ -1037,6 +1044,7 @@ export default {
 }
 .borderWhite {
   border: 1px solid white;
+  font-size: 20px;
 }
 .chartArea {
   margin: auto;
@@ -1045,12 +1053,15 @@ export default {
 }
 .btDiv {
   position: absolute;
-  bottom: 2vh;
+  bottom: 20px;
   left: 5vw;
   width: 90vw;
 }
 .btnCol {
   cursor: pointer;
   width: 90%;
+}
+.plotBtn {
+  width: 170px;
 }
 </style>
