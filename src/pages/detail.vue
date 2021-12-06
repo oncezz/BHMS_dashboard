@@ -83,9 +83,6 @@
             no-caps
           />
         </div>
-        <div class="col " style="font-size: 48px;" align="center">
-          {{ labelCol[input.colId - 1] }}
-        </div>
       </div>
       <div class="row">
         <div class=" col">
@@ -106,11 +103,18 @@
             </div>
           </div>
         </div>
-        <div class="col-4" style="width:25vw">
-          <div class="q-pt-md q-mt-md q-pl-xl">
-            <img src="../../public/image/legendDetail.svg" alt="" />
+        <div class="col-4 q-pl-md" style="width:25vw">
+          <div class="" style="font-size: 6vh;" align="center">
+            {{ labelCol[input.colId - 1] }}
           </div>
-          <div class="legendText q-px-xl ">
+          <div class="q-pl-xl col q-py-md">
+            <img
+              src="../../public/image/legendDetail.svg"
+              width="100%"
+              alt=""
+            />
+          </div>
+          <div class="legendText q-px-xl " style="font-size:3vh">
             <div class="row">
               <div class="col-5 " style="color:#E4C36C">
                 S1<sub style="font-size: 24px;">max</sub> =
