@@ -465,6 +465,16 @@ export default {
       this.colSG[index].status = show;
       this.plotChartReal();
     },
+    // เปลี่ยน timestamp เป็น d-m-Y
+    convertTime(times) {
+      times = Number(times);
+      let a = new Date(times);
+      let y = a.getFullYear();
+      let m = a.getMonth();
+      let d = a.getDate();
+      let date = d + "-" + m + "-" + y;
+      return date;
+    },
     // เปลี่ยน เดือน/ปี ใน duration -- max min avg ใน plot type
     changeDuration() {
       this.beforePlot = "Please click Plot button.";
@@ -539,7 +549,7 @@ export default {
       let dataS19 = [];
 
       res.data.forEach(x => {
-        dataTimestamp.push(Number(x.timestamp));
+        dataTimestamp.push(this.convertTime(x.timestamp));
         dataS1.push(Number(x[0]));
         dataS2.push(Number(x[1]));
         dataS3.push(Number(x[2]));
@@ -683,12 +693,15 @@ export default {
         //   }
         // },
         xAxis: {
-          type: "datetime",
+          title: {
+            text: "Date",
+            enabled: false
+          },
           categories: this.data[0].data,
           labels: {
-            formatter: function() {
-              return Highcharts.dateFormat("%d-%m-%Y", this.value);
-            },
+            // formatter: function() {
+            //   return Highcharts.dateFormat("%d-%m-%Y", this.value);
+            // },
             style: {
               fontSize: "16px"
             },

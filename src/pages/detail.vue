@@ -315,6 +315,15 @@ export default {
     };
   },
   methods: {
+    convertTime(times) {
+      times = Number(times);
+      let a = new Date(times);
+      let y = a.getFullYear();
+      let m = a.getMonth();
+      let d = a.getDate();
+      let date = d + "-" + m + "-" + y;
+      return date;
+    },
     async plotChart() {
       //หาค่า timeStartUnix / timeEndUnix millisecond
       let mStart = this.monthList.indexOf(this.input.monthStart) + 1;
@@ -357,7 +366,7 @@ export default {
         let res = await axios.post(url, JSON.stringify(temp));
 
         res.data.forEach(x => {
-          dataTimestamp.push(Number(x.timestamp));
+          dataTimestamp.push(this.convertTime(x.timestamp));
           dataS1.push(Number(x[0]));
           dataS2.push(Number(x[1]));
           dataS3.push(Number(x[2]));
@@ -373,9 +382,8 @@ export default {
         };
         let url = this.serverpath + "fe_detaildaynight.php";
         let res = await axios.post(url, JSON.stringify(temp));
-        // console.log(res.data);
         res.data.forEach(x => {
-          dataTimestamp.push(Number(x.timestamp));
+          dataTimestamp.push(this.convertTime(x.timestamp));
           dataS1.push(Number(x[0]));
           dataS2.push(Number(x[1]));
           dataS3.push(Number(x[2]));
@@ -449,7 +457,7 @@ export default {
         .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
+      console.log(data[0].data);
       Highcharts.chart("chart1", {
         chart: {
           zoomType: "x"
@@ -474,12 +482,15 @@ export default {
         //   }
         // },
         xAxis: {
-          type: "datetime",
           categories: data[0].data,
+          title: {
+            text: "Date",
+            enabled: false
+          },
           labels: {
-            formatter: function() {
-              return Highcharts.dateFormat("%d-%m-%Y", this.value);
-            },
+            // formatter: function() {
+            //   return Highcharts.dateFormat("%d-%m-%Y", this.value);
+            // },
             style: {
               fontSize: "16px"
             },
@@ -506,6 +517,8 @@ export default {
         exporting: {
           enabled: true,
           width: "1920px",
+          csv: {},
+          xls: {},
           chartOptions: {
             // chart: {
             //   backgroundColor: "#FFFFFF"
