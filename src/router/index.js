@@ -32,6 +32,7 @@ export default function(/* { store, ssrContext } */) {
 Vue.mixin({
   data() {
     return {
+      // serverpath: "https://yaksaconcept.com/bhms_api/"
       serverpath: "http://localhost/bhms_data/"
     };
   },
