@@ -470,7 +470,7 @@ export default {
       times = Number(times);
       let a = new Date(times);
       let y = a.getFullYear();
-      let m = a.getMonth();
+      let m = a.getMonth() + 1;
       let d = a.getDate();
       let date = d + "-" + m + "-" + y;
       return date;
@@ -570,10 +570,18 @@ export default {
         dataS18.push(Number(x[17]));
         dataS19.push(Number(x[18]));
       });
+      let typeName = "";
+      if (this.plotType == "avg") {
+        typeName = "average";
+      } else if (this.plotType == "min") {
+        typeName = "minimum";
+      } else {
+        typeName = "maximum";
+      }
 
       this.titleChart =
         "Trend of changes in " +
-        this.plotType +
+        typeName +
         " strain from " +
         this.monthStart +
         " " +

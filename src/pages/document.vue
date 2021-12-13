@@ -16,12 +16,14 @@
           >
         </div>
         <div style="width:20%;">
-          <div class="blueBox bg-grey">
-            <div align="center" class="padC">
-              <q-icon name="fas fa-database" size="80px" />
-            </div>
-            <div class="fontBox q-pt-sm">database dictionary</div>
-          </div>
+          <a :href="serverpath + '/doc/datadic.pdf'" target="_blank">
+            <div class="blueBox bg-indigo-9">
+              <div align="center" class="padC">
+                <q-icon name="fas fa-database" size="80px" />
+              </div>
+              <div class="fontBox q-pt-sm">database dictionary</div>
+            </div></a
+          >
         </div>
         <div style="width:20%;">
           <div class="blueBox bg-grey">
@@ -56,7 +58,7 @@
         </div>
       </div>
 
-      <div class="row q-pt-md">
+      <div class="row q-pt-lg q-mt-sm">
         <div style="width:20%;">
           <div class="blueBox bg-grey">
             <div align="center" class="padC">

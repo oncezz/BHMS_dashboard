@@ -319,7 +319,7 @@ export default {
       times = Number(times);
       let a = new Date(times);
       let y = a.getFullYear();
-      let m = a.getMonth();
+      let m = a.getMonth() + 1;
       let d = a.getDate();
       let date = d + "-" + m + "-" + y;
       return date;
