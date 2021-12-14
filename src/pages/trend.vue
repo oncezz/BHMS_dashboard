@@ -214,7 +214,7 @@
       </div>
       <div class="row items-center q-my-sm">
         <div class="col-1 " align="right">
-          <img class="q-py-sm" src="../../public/image/line3.svg" alt="" />
+          <img class="q-py-sm" src="../../public/image/line4.svg" alt="" />
         </div>
         <div class="col-1 " align="center">SS</div>
         <div
@@ -265,7 +265,7 @@
       </div>
       <div class="row items-center q-my-sm">
         <div class="col-1 " align="right">
-          <img class="q-py-sm" src="../../public/image/line4.svg" alt="" />
+          <img class="q-py-sm" src="../../public/image/line3.svg" alt="" />
         </div>
         <div class="col-1 " align="center">SG</div>
         <div
