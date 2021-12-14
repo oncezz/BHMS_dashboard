@@ -404,7 +404,7 @@ export default {
           status: false
         },
         {
-          name: "M40/40",
+          name: "M40/04",
           status: false
         },
         {
@@ -412,7 +412,7 @@ export default {
           status: false
         },
         {
-          name: "M42/40",
+          name: "M42/04",
           status: false
         },
         {
@@ -436,8 +436,12 @@ export default {
       ],
       colSG: [
         {
-          name: "M33/02",
+          name: "M32/11",
           status: true
+        },
+        {
+          name: "M33/02",
+          status: false
         },
         {
           name: "M35/23",
@@ -653,7 +657,7 @@ export default {
           data: dataS14
         },
         {
-          name: "M40/40",
+          name: "M40/04",
           data: dataS15
         },
         {
@@ -924,7 +928,7 @@ export default {
           },
           {
             type: "spline",
-            name: "M40/40",
+            name: "M40/04",
             color: "#795548",
             tooltip: {
               valueSuffix: " µε"
@@ -952,7 +956,7 @@ export default {
           },
           {
             type: "spline",
-            name: "M42/20",
+            name: "M42/04",
             color: "#FFC107",
             tooltip: {
               valueSuffix: " µε"
@@ -1022,7 +1026,7 @@ export default {
           },
           {
             type: "spline",
-            name: "M33/02",
+            name: "M32/11",
             color: "#00BCD4",
             tooltip: {
               valueSuffix: " µε"
@@ -1031,12 +1035,12 @@ export default {
               enabled: false
             },
             dashStyle: "DashDot",
-            data: this.data[6].data,
+            data: this.data[5].data,
             visible: this.colSG[0].status
           },
           {
             type: "spline",
-            name: "M35/23",
+            name: "M33/02",
             color: "#FF0000",
             tooltip: {
               valueSuffix: " µε"
@@ -1045,8 +1049,22 @@ export default {
               enabled: false
             },
             dashStyle: "DashDot",
-            data: this.data[9].data,
+            data: this.data[6].data,
             visible: this.colSG[1].status
+          },
+          {
+            type: "spline",
+            name: "M35/23",
+            color: "#7986CB",
+            tooltip: {
+              valueSuffix: " µε"
+            },
+            marker: {
+              enabled: false
+            },
+            dashStyle: "DashDot",
+            data: this.data[9].data,
+            visible: this.colSG[2].status
           }
         ]
       });

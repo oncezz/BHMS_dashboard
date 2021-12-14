@@ -57,7 +57,6 @@
           <div class="estBox "></div>
         </div>
         <div class="dotBox row">
-          <div class="estBox "></div>
           <div class="stBox row items-center " @click="goToDetail(6)">
             <strain-box
               :strain="strainCol[5]"
@@ -65,6 +64,7 @@
               :typeCol="typeCol[5]"
             ></strain-box>
           </div>
+          <div class="estBox "></div>
           <div class="estBox "></div>
         </div>
       </div>
