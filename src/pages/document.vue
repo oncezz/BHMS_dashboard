@@ -26,7 +26,7 @@
           >
         </div>
         <div style="width:20%;">
-          <div class="blueBox bg-grey">
+          <div class="blueBox bg-indigo-9">
             <div align="center" class="padC">
               <q-icon name="far fa-hdd" size="80px" />
             </div>
@@ -60,11 +60,11 @@
 
       <div class="row q-pt-lg q-mt-sm">
         <div style="width:20%;">
-          <div class="blueBox bg-grey">
+          <div class="blueBox bg-indigo-9">
             <div align="center" class="padC">
-              <q-icon name="fas fa-tools" size="80px" />
+              <q-icon name="fas fa-book" size="80px" />
             </div>
-            <div class="fontBox q-pt-sm">Sensor replace manual</div>
+            <div class="fontBox q-pt-sm">Manual</div>
           </div>
         </div>
         <div style="width:20%;">

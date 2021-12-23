@@ -128,7 +128,8 @@ export default {
         "M43/19"
       ],
       strainCol: [],
-      data: []
+      data: [],
+      loadingTimer: ""
     };
   },
   methods: {
@@ -206,9 +207,12 @@ export default {
   },
   async mounted() {
     await this.loadData();
-    setInterval(async () => {
+    this.loadingTimer = setInterval(async () => {
       await this.loadData();
-    }, 10000);
+    }, 300000); // reload every 5 min = 300 sec =300000 milisec
+  },
+  beforeDestroy() {
+    clearInterval(this.loadingTimer);
   }
 };
 </script>

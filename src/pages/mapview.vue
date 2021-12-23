@@ -279,6 +279,7 @@ export default {
   },
   data() {
     return {
+      loadingTimer: "",
       data: [],
       strainCol: [],
       typeCol: [
@@ -384,9 +385,12 @@ export default {
   },
   async mounted() {
     await this.loadData();
-    setInterval(async () => {
+    this.loadingTimer = setInterval(async () => {
       await this.loadData();
-    }, 10000);
+    }, 300000); // reload every 5 min = 300 sec =300000 milisec
+  },
+  beforeDestroy() {
+    clearInterval(this.loadingTimer);
   }
 };
 </script>
