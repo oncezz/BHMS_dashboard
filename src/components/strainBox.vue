@@ -12,7 +12,7 @@
     <div v-show="strain < 0">
       <img src="../../public/image/lostCol.svg" alt="" style="width:3vw" />
     </div>
-    <div class="let q-pt-sm q-pb-sm">{{ labelCol }}</div>
+    <div class="let">{{ labelCol }}</div>
     <div class="levelDamage">{{ typeCol }}</div>
     <div class="let" v-show="strain >= 0">{{ strain }} µε</div>
     <div class="let" v-show="strain < 0">- µε</div>
@@ -38,12 +38,12 @@ export default {
 <style lang="scss" scoped>
 .let {
   color: black;
-  font-size: 1vw;
+  font-size: 2vh;
 }
 .levelDamage {
   width: 40%;
   border: 1px solid black;
   color: black;
-  font-size: 1vw;
+  font-size: 2vh;
 }
 </style>
