@@ -85,7 +85,6 @@
           glossy
           label="Report"
           no-caps
-          disable
         />
       </div>
       <div class="q-pa-sm" v-show="menu != 4">
@@ -97,7 +96,6 @@
           glossy
           label="Report"
           no-caps
-          disable
         />
       </div>
       <div class="q-pa-sm" v-show="menu == 5">
