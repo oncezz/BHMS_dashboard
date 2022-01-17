@@ -60,12 +60,14 @@
 
       <div class="row q-pt-lg q-mt-sm">
         <div style="width:20%;">
-          <div class="blueBox bg-indigo-9">
-            <div align="center" class="padC">
-              <q-icon name="fas fa-book" size="80px" />
-            </div>
-            <div class="fontBox q-pt-sm">Manual</div>
-          </div>
+          <a :href="serverpath + '/doc/manual.pdf'" target="_blank">
+            <div class="blueBox bg-indigo-9">
+              <div align="center" class="padC">
+                <q-icon name="fas fa-book" size="80px" />
+              </div>
+              <div class="fontBox q-pt-sm">Manual</div>
+            </div></a
+          >
         </div>
         <div style="width:20%;">
           <a :href="serverpath + '/doc/study_report.pdf'" target="_blank"
