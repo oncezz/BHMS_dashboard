@@ -33,7 +33,8 @@ Vue.mixin({
   data() {
     return {
       // serverpath: "https://yaksaconcept.com/bhms_api/"
-      serverpath: "http://localhost/bhms_data/"
+      // serverpath: "http://localhost/bhms_data/"
+      serverpath: "http://192.168.0.50/bhms_data/"
     };
   },
   methods: {
