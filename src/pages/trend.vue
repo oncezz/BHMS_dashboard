@@ -749,7 +749,7 @@ export default {
 
         yAxis: [
           {
-            min: 0,
+            min: -1000,
             title: {
               text: "Strain (µε)",
               style: {
