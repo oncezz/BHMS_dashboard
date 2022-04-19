@@ -51,7 +51,7 @@
           />
         </div>
       </div>
-      <div class="row ">
+      <div class="row items-end">
         <div class="" style="width:2%"></div>
         <div class="colBor row items-center q-pa-sm" @click="goToDetail(19)">
           <col-box
@@ -60,8 +60,14 @@
             :labelCol="labelCol[18]"
           />
         </div>
+        <div class="col"></div>
+        <div align="right" class="remark">
+          Reading values show the maximum strain on the footings
+        </div>
+        <div class="" style="width:2%"></div>
       </div>
     </div>
+
     <!-- กล่องด้านล่าง -->
     <div class="row fixed-bottom q-pb-md">
       <strain-listview></strain-listview>

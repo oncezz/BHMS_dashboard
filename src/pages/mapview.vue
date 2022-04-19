@@ -240,6 +240,9 @@
         <div class="" style="width:12%"></div>
         <div class=" sta" style="width:6%" align="center">44+000</div>
       </div>
+      <div align="right" class="remark">
+        Reading values show the maximum strain on the footings
+      </div>
       <div class="row fixed-bottom q-pb-md">
         <strain-mapview></strain-mapview>
         <level-damage></level-damage>
@@ -429,5 +432,8 @@ export default {
 }
 .centerDiv {
   margin: auto;
+}
+.remark {
+  padding-right: 2.5%;
 }
 </style>
