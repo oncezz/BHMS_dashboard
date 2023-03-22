@@ -247,8 +247,8 @@ export default {
         "M31/02",
         "M32/11",
         "M33/02",
-        "M34/02",
-        "M34/05",
+        "M34/10",
+        "M34/14",
         "M35/23",
         "M36/16",
         "M36/18",
@@ -499,7 +499,7 @@ export default {
         },
         yAxis: [
           {
-            min: 0,
+           
             title: {
               text: "Strain (µε)",
               style: {

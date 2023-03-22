@@ -374,11 +374,11 @@ export default {
           status: false
         },
         {
-          name: "M34/02",
+          name: "M34/10",
           status: false
         },
         {
-          name: "M34/05",
+          name: "M34/14",
           status: false
         }
       ],
@@ -625,11 +625,11 @@ export default {
           data: dataS6
         },
         {
-          name: "M34/02",
+          name: "M34/10",
           data: dataS7
         },
         {
-          name: "M34/05",
+          name: "M34/14",
           data: dataS8
         },
         {
@@ -749,7 +749,6 @@ export default {
 
         yAxis: [
           {
-            min: 0,
             title: {
               text: "Strain (µε)",
               style: {
@@ -830,7 +829,7 @@ export default {
           },
           {
             type: "spline",
-            name: "M34/02",
+            name: "M34/10",
             color: "#7986CB",
             tooltip: {
               valueSuffix: " µε"
@@ -844,7 +843,7 @@ export default {
           },
           {
             type: "spline",
-            name: "M34/05",
+            name: "M34/14",
             color: "#4CAF50",
             tooltip: {
               valueSuffix: " µε"

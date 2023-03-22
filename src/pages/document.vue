@@ -25,7 +25,7 @@
             </div></a
           >
         </div>
-        <div style="width:20%;">
+        <div style="width:20%;" v-show="false">
           <div class="blueBox bg-indigo-9">
             <div align="center" class="padC">
               <q-icon name="far fa-hdd" size="80px" />
@@ -56,9 +56,6 @@
             </div></a
           >
         </div>
-      </div>
-
-      <div class="row q-pt-lg q-mt-sm">
         <div style="width:20%;">
           <a :href="serverpath + '/doc/manual.pdf'" target="_blank">
             <div class="blueBox bg-indigo-9">
@@ -69,6 +66,9 @@
             </div></a
           >
         </div>
+      </div>
+
+      <div class="row q-pt-lg q-mt-sm">
         <div style="width:20%;">
           <a :href="serverpath + '/doc/study_report.pdf'" target="_blank"
             ><div class="blueBox bg-indigo-9">

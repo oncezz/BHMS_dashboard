@@ -193,7 +193,7 @@
                   <div class="br1" style="width:20%" align="center">
                     <div
                       class="circleDiv greenDiv"
-                      v-if="item.S1 < 1000 && item.S1 >= 0"
+                      v-if="item.S1 < 1000"
                     ></div>
                     <div
                       class="circleDiv yellowDiv"
@@ -208,7 +208,7 @@
                   <div class="br1" style="width:20%" align="center">
                     <div
                       class="circleDiv greenDiv"
-                      v-if="item.S2 < 1000 && item.S2 >= 0"
+                      v-if="item.S2 < 1000"
                     ></div>
                     <div
                       class="circleDiv yellowDiv"
@@ -223,7 +223,7 @@
                   <div class="br1" style="width:20%" align="center">
                     <div
                       class="circleDiv greenDiv"
-                      v-if="item.S3 < 1000 && item.S3 >= 0"
+                      v-if="item.S3 < 1000"
                     ></div>
                     <div
                       class="circleDiv yellowDiv"
@@ -238,22 +238,22 @@
                   <div class="br1" style="width:20%" align="center">
                     <div
                       class="circleDiv greenDiv"
-                      v-if="item.S3 < 1000 && item.S3 >= 0"
+                      v-if="item.S4 < 1000 "
                     ></div>
                     <div
                       class="circleDiv yellowDiv"
-                      v-else-if="item.S3 >= 1000 && item.S3 < 2000"
+                      v-else-if="item.S4 >= 1000 && item.S4 < 2000"
                     ></div>
                     <div
                       class="circleDiv redDiv"
-                      v-else-if="item.S3 >= 2000"
+                      v-else-if="item.S4 >= 2000"
                     ></div>
                     <div class="circleDiv greyDiv" v-else></div>
                   </div>
                   <div class="br1" style="width:20%" align="center">
                     <div
                       class="circleDiv greenDiv"
-                      v-if="item.S5 < 1000 && item.S5 >= 0"
+                      v-if="item.S5 < 1000 "
                     ></div>
                     <div
                       class="circleDiv yellowDiv"
@@ -385,8 +385,8 @@ export default {
         { name: "M31/02", type: "SS", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
         { name: "M32/11", type: "SG", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
         { name: "M33/02", type: "SG", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
-        { name: "M34/02", type: "LF", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
-        { name: "M34/05", type: "LF", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
+        { name: "M34/10", type: "LF", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
+        { name: "M34/14", type: "LF", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
         { name: "M35/23", type: "SG", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
         { name: "M36/16", type: "SS", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
         { name: "M36/18", type: "SS", S1: 2, S2: 1, S3: 3, S4: 0, S5: 1 },
